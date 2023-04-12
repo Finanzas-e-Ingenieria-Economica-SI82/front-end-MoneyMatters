@@ -7,11 +7,9 @@
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
 import SingUp from './components/SignUp.vue'
-
 export default {
   name: 'App',
   components: {
-    
     SingUp
   }
 }

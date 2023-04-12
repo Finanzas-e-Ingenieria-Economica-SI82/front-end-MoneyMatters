@@ -35,6 +35,8 @@
             console.warn(result);
             if(result.status==201){
                 alert("Se registró correctamente.")
+                localStorage.setItem("user-info",JSON.stringify(result.data))
+                this.$router.push({name:'HomeS'})
             }
         }
       }

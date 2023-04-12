@@ -1,16 +1,17 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <SingUp/>
+  <router-link to="/"></router-link>
+  <router-view></router-view>
+
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import SingUp from './components/SignUp.vue'
+
 export default {
   name: 'App',
   components: {
-    SingUp
   }
 }
 </script>

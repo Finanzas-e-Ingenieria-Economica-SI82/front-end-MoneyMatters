@@ -1,12 +1,17 @@
 <template>
+    <div class="grid">
         <h1>Login</h1>
         <div class="login">
             <input type="text" v-model="username" id="username" name="username" placeholder="Enter username" />
-            <input type="password" v-model="password" id="password" name="password" placeholder="Enter password" />
-            <button v-on:click="login">Sign In</button>
+            <input type="password" v-model="password" id="password" name="password" placeholder="Enter password" />    
+            <router-link to="/home">
+              <button v-on:click="login">Sign In</button>
+            </router-link>
             <p v-if="error" class="error">{{ error }}</p>
         </div>
-  <router-link to="/login"></router-link>
+
+    </div>
+        
 </template>
 
 <script>

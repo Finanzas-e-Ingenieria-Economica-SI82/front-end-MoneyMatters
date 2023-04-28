@@ -1,12 +1,18 @@
 import Home from './components/Home.vue'
 import SignUp from './components/SignUp.vue'
 import Login from './components/Login.vue'
+import Convert_rate from './components/Convert_rate.vue'
+
 import {createRouter, createWebHistory} from "vue-router";
 const routes=[
     {
+        path: "/",
+        redirect: "/sign-up"
+    },
+    {
         name: "HomeS",
         component: Home,
-        path: '/'
+        path: '/home'
     },
     {
         name: "SignUp",
@@ -17,7 +23,13 @@ const routes=[
         name: "LogiN",
         component: Login,
         path: '/login'
+    },
+    {
+        name: "Convert_rate",
+        component: Convert_rate,
+        path: '/convert_rate'
     }
+    
 ];
 
 const router = createRouter({

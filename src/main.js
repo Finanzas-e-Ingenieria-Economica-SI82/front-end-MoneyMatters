@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './routers'
 import PrimeVue from 'primevue/config';
 
+import Button from 'primevue/button';
+
 //theme
 import "primevue/resources/themes/lara-light-indigo/theme.css";     
 //core
@@ -12,6 +14,8 @@ const app = createApp(App)
 
 app.use(PrimeVue)
 app.use(router)
+
+app.component('pv-button', Button)
 
 
 app.mount('#app')

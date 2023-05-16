@@ -8,7 +8,9 @@
         </div>
         <div class="group">
           <!---Cambiar que es lo que va a ir en este apartado-->
+          <router-link to="/sign-up">
             <a class="item">Log out</a>
+          </router-link>
         </div>
       </nav>
 

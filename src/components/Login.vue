@@ -1,17 +1,29 @@
 <template>
-    <div class="grid">
-        <h1>Login</h1>
-        <div class="login">
-            <input type="text" v-model="username" id="username" name="username" placeholder="Enter username" />
-            <input type="password" v-model="password" id="password" name="password" placeholder="Enter password" />    
-            <router-link to="/home">
-              <button v-on:click="login">Sign In</button>
-            </router-link>
+  <v-container class="container">
+    <v-row class="grid3">
+      <v-col>
+        <div class="col3 md:col-6 lg:col-3" >
+          <img style="width: 80vh; height: 100vh;" src="../assets/loginban.png">
+        </div>
+      </v-col>
+    </v-row>
+    <v-row class="grid4">
+      <v-col>
+        <div class="col3 md:col-6 lg:col-3" style="padding: 170px; height:100vh; width:102vh; background: #000;">
+            <img style="width:50px" src="../assets/logo.png">
+            <img style="width:200px" src="../assets/letter.png">
+            <div style="margin-top: 50px;">
+              <input type="text" v-model="username" id="username" name="username" placeholder="Username" />
+              <input type="password" v-model="password" id="password" name="password" placeholder="Password" />    
+            </div>
+              <router-link to="/home">
+                <pv-button rounded style="margin-top: 50px; background: #46A2AE; border-style: none; width: 30%; justify-content: center; font-weight: bold;" v-on:click="login">Sign In</pv-button>
+              </router-link>
             <p v-if="error" class="error">{{ error }}</p>
         </div>
-
-    </div>
-        
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -74,23 +86,24 @@ import axios from 'axios';
     .error {
       color: red;
     }
-    .login input{
-        width: 200px;
+    .container{
+        display: flex;
+        max-width: 100vh;
+        max-height: 100vh;
+    }
+    .grid3{
+        background-size: cover;
+        background-position: center;
+    }
+    .grid4 input{
+        width: 320px;
         height: 40px;
         padding-left: 50px;
         display: block;
         margin-bottom: 30px;
         margin-right: auto;
         margin-left: auto;
-        border: 1px solid black;
-    }
-    
-    .login button{
-        width: 250px;
-        height: 40px;
-        background:  rgb(137, 0, 201);
-        border: 1px solid rgb(137, 0, 201);
-        color: rgb(255, 255, 255);
-        cursor: pointer;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 10px;
     }
 </style>

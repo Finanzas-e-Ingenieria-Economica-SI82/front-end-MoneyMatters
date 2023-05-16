@@ -1,10 +1,10 @@
 <template>
-    <v-container class="container">
+    <v-container class="sing-up">
         <v-row class="grid">
             <v-col>
                 <div class="col1 md:col-6 lg:col-3" style="padding: 60px; height: 100vh; width: 60vh;">
                     <img style="width:50px" src="../assets/logo.png">
-                    <img style="width:200px" src="../assets/letter.png">
+                    <img style="width:200px; padding: 10px" src="../assets/letter.png">
                     <p class="text-about" style="text-align: center; margin-top: 40%; font-size: 35px; color: #FFFF; font-weight: bold;">
                         Welcome
                     </p>
@@ -74,17 +74,17 @@ export default {
 </script>
     
 <style>
-    .container{
+    .sing-up{
         display: flex;
         max-width: 100vh;
         max-height: 100vh;
     }
     .col1{
-        background: #000000;
+        background: #000000ef;
     }
     .col2{
         box-shadow: 2px 3px 20px 6px rgba(0, 0, 0, 0.137);
-        opacity: 10px;
+        opacity: 5px;
         margin: 8.5%;
         margin-left: 11%;
         border-radius: 50px;

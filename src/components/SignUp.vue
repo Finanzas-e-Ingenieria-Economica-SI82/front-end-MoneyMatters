@@ -21,8 +21,8 @@
             <v-col>
                 <div class="col2 md:col-6 lg:col-3" style="padding: 60px; height:85vh ;width: 100vh;">
                     <h1 style="color: #46A2AE; font-weight: bold"> Create Your Account </h1>
-                        <div class="register">
-                            <input type="name" v-model="name" placeholder="Name"/>
+                        <div class="register" flex flex-wrap justify-content-center gap-2>
+                            <input type="name" v-model="name" v-tooltip.top="'Enter your username'" placeholder="Name"/>
                             <input type="lastname" v-model="name" placeholder="Lastname"/>
                             <input type="username" v-model="username" placeholder="Username"/>
                             <input type="password" v-model="password" placeholder="Password"/>

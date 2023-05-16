@@ -3,7 +3,7 @@
     <v-row class="grid3">
       <v-col>
         <div class="col3 md:col-6 lg:col-3" >
-          <img style="width: 75vh; height: 100vh" src="../assets/loginban.png">
+          <img style="width: 75vh; height: 99.5vh" src="../assets/loginban.png">
         </div>
       </v-col>
     </v-row>

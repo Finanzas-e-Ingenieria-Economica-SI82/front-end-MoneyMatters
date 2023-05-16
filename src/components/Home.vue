@@ -4,12 +4,30 @@
     
       <nav class="menu-bar">
         <div class="group">
-          <a class="item title">Money Matters</a>
+          <img style="width:30px; height: 50px; margin: 15px; margin-left: 30px;" src="../assets/logo.png"/>
+          <img style="width:180px; padding: 10px" src="../assets/letter.png"/>
+        </div>
+        <div class="item">
+          <p>
+            Inmuebles
+          </p>
+        </div>
+        <div class="item">
+          <p>
+            Crédito
+          </p>
+        </div>
+        <div class="item">
+          <p>
+            Setting
+          </p>
         </div>
         <div class="group">
           <!---Cambiar que es lo que va a ir en este apartado-->
           <router-link to="/sign-up">
-            <a class="item">Log out</a>
+            <span class="material-symbols-outlined" style="color:white; margin-top: 20px; padding-right: 50px; justify-content: center; align-content: center;">
+            logout
+            </span>
           </router-link>
         </div>
       </nav>
@@ -113,6 +131,8 @@
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
+    align-items: center;
+    inline-size: center;
   }
 
   .item {
@@ -120,18 +140,14 @@
     background-color: transparent;
     font-size: 18px;
     display: inline-block;
-    box-sizing: border-box;
-    padding: 14px 20px;
-  }
-
-  .item.title {
-    font-weight: 600;
+    padding: 5px;
   }
 
   .item:hover {
-    background-color: rgba(150, 149, 153, 0.1);
-    border-radius: 25%;
+    background-color: rgba(150, 149, 153, 0.712);
+    border-radius: 15px;
     pointer-events: none;
+    transition: 0.5s;
   }
   
 </style>

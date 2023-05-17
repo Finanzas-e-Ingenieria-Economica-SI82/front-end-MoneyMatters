@@ -11,9 +11,40 @@
       "id": 2
     }
   ],
-  "types": [
+  "house": [
     {
-      "username": "prueba2"
+      "id": 1,
+      "name": "Casa Moderna",
+      "dimension": "100,00 m2",
+      "numDormitorios": "4 Dormitorios",
+      "price": "S/. 200,000",
+      "imageUrl": ""
+    }
+  ],
+  "department": [
+    {
+      "id": 1,
+      "name": "DPTO 1201",
+      "dimension": "98,82 m2",
+      "numDormitorios": "3 Dormitorios",
+      "price": "S/. 120,000",
+      "imageUrl": ""
+    },
+    {
+      "id": 2,
+      "name": "DPTO 1202",
+      "dimension": "88,82 m2",
+      "numDormitorios": "2 Dormitorios",
+      "price": "S/. 80,000",
+      "imageUrl": ""
+    },
+    {
+      "id": 3,
+      "name": "DPTO 1203",
+      "dimension": "90,82 m2",
+      "numDormitorios": "3 Dormitorios",
+      "price": "S/. 100,000",
+      "imageUrl": ""
     }
   ]
 }

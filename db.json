@@ -10,5 +10,10 @@
       "password": "jas",
       "id": 2
     }
+  ],
+  "types": [
+    {
+      "username": "prueba2"
+    }
   ]
 }

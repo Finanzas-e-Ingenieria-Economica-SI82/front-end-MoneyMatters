@@ -239,10 +239,10 @@
             </div>
           </div>
         </div>
-        <button type="button" class="btn btn-primary btn-lg" @click="this.Result">Mostrar</button>
-          <button type="button" class="btn btn-secondary btn-lg">Nuevo</button>
+        <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="button" class="btn btn-primary btn-lg" @click="this.Result">Mostrar</pv-button>
+          <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="button" class="btn btn-secondary btn-lg">Nuevo</pv-button>
         <router-link to="/home">
-          <button type="button" class="btn btn-secondary btn-lg">Salir</button>
+          <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="button" class="btn btn-secondary btn-lg">Salir</pv-button>
         </router-link>
         <div class="form-group col-md-6">
           <label for="inputCity">Resultados</label>
@@ -377,9 +377,8 @@
     .card{
       margin: 80px;
       padding: 20px;
-      background-image: linear-gradient(90deg, rgba(255, 255, 255, 1) 7%, rgba(145, 117, 149, 1) 95%);
+      box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.1);
       border-radius: 25px;
-      box-shadow: 2px 2px 8px 4px rgba(0, 0, 0, 0.13);
     }
     .card-body{
       padding-top: 20px;
@@ -389,9 +388,8 @@
       margin: 10px;
       display: inline-block;
       border-radius: 10px;
-      background:  rgb(145, 71, 179);
       width: 100px;
-      height: 30px;
+      height: 45px;
       transition: 0.5s;
     }
     .form-group{

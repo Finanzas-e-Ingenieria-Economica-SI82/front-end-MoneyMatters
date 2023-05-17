@@ -1,29 +1,33 @@
 <template>
-  <div class="card text-center">
+  <div class="home">
     <div class="card-header">
-    
       <nav class="menu-bar">
         <div class="group">
           <img style="width:30px; height: 50px; margin: 15px; margin-left: 30px;" src="../assets/logo.png"/>
           <img style="width:180px; padding: 10px" src="../assets/letter.png"/>
         </div>
+        
         <div class="item">
           <p>
             Inmuebles
           </p>
         </div>
+
         <div class="item">
           <p>
             Crédito
           </p>
         </div>
-        <div class="item">
-          <p>
-            Setting
-          </p>
-        </div>
+
+        <router-link to="/convert_rate">
+          <div class="item">
+            <p>
+                Setting
+            </p>
+          </div>
+        </router-link>
+
         <div class="group">
-          <!---Cambiar que es lo que va a ir en este apartado-->
           <router-link to="/sign-up">
             <span class="material-symbols-outlined" style="color:white; margin-top: 20px; padding-right: 50px; justify-content: center; align-content: center;">
             logout
@@ -32,87 +36,104 @@
         </div>
       </nav>
 
-    <h1> Home </h1>
-    <router-link to="/home"></router-link>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-sm-6">
-          <router-link to="/convert_rate" style="text-decoration: none; color: #4F555A">
-            <div class="card" style="height: 100%">
-              <div class="card-body">
-                <div class="col-md-4">
-                  <img src="../assets/ahorro.jpg" class="card-img mw-100" alt="ahorro">
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Conversión entre tipos de tasa de interés</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </div>
-        <div class="col-sm-6">
-          <router-link to="" style="text-decoration: none; color: #4F555A">
-          <div class="card">
-            <div class="card-body">
-              <div class="col-md-4">
-                <img src="../assets/france.jpg" class="card-img" alt="francés">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Método Francés</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-              </div>
-            </div>
-          </div>
-          </router-link>
-        </div>
+      <div class="card flex justify-content-center" style="margin-top: 50px;">
+        <form @submit="onSubmit" class="flex flex-column align-items-center gap-2">
+            <pv-multiSelect style="width: 20%;" v-model="selectType" :class="{ 'p-invalid': errorMessage }" :options="types" optionLabel="name" placeholder="Select Type" :maxSelectedLabels="3" class="w-full md:w-20rem" aria-describedby="text-error" />
+              <small id="text-error" class="p-error">{{ errorMessage || '&nbsp;' }}</small>
+            <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="submit" label="Submit" />
+        </form>
+        <pv-toast/>
       </div>
 
-      <div class="row">
-        <div class="col-sm-6">
-          <router-link to="/conversionTime" style="text-decoration: none; color: #4F555A">
-          <div class="card">
-            <div class="card-body">
-              <div class="col-md-4">
-                <img src="http://bitly.ws/vwpN" class="card-img" alt="dinero">
+      <div class="card-list md:col-6 lg:col-3" style="padding: 40px; margin-top: 40px; margin: 10px;">
+        <pv-card style="width: 25em">
+            <template #header>
+                <img style="width: 20em" alt="home" src="../assets/image1.png" />
+            </template>
+            <template #title> DPTO 1201 </template>
+            <template #subtitle>
+              <div style="">
+                <span class="material-symbols-outlined" style="justify-content: space-around;">bed</span>
+                  3 Dormitorios
+                <span class="material-symbols-outlined" style="justify-content: space-around;">design_services</span>
+                  98,82 m2
+                <span class="material-symbols-outlined">payments</span>
+                  S/. 120,000
               </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Presente y valor futuro</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-              </div>
-            </div>
-          </div>
-          </router-link>
-        </div>
+            </template>
+            <template #content>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
+                    quas!
+                </p>
+            </template>
+            <template #footer>
+                <pv-button rounded style="background: #46A2AE; border-style: none; width: 40%; justify-content: center; font-weight: bold;" icon="pi pi-check" label="See More" />
+            </template>
+        </pv-card>
+
+        <pv-card style="width: 25em; margin-top: 13px;">
+            <template #header>
+                <img style="width: 20em; margin-top: 10px;" alt="home" src="../assets/image2.png" />
+            </template>
+            <template #title> DPTO 1201 </template>
+            <template #subtitle>
+              <span class="material-symbols-outlined">bed</span>
+                2 Dormitorios
+              <span class="material-symbols-outlined" style="justify-content: space-around;">design_services</span>
+                88,82 m2
+              <span class="material-symbols-outlined">payments</span>
+                S/. 80,000
+            </template>
+            <template #content>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
+                    quas!
+                </p>
+            </template>
+            <template #footer>
+                <pv-button rounded style="background: #46A2AE; border-style: none; width: 40%; justify-content: center; font-weight: bold;" icon="pi pi-check" label="See More" />
+            </template>
+        </pv-card>
+
+        <pv-card style="width: 25em">
+            <template #header>
+                <img style="width: 20em" alt="home" src="../assets/image3.png" />
+            </template>
+            <template #title> DPTO 1201 </template>
+            <template #subtitle>
+              <span class="material-symbols-outlined">bed</span>
+                3 Dormitorios
+              <span class="material-symbols-outlined" style="justify-content: space-around;">design_services</span>
+                90,82 m2
+              <span class="material-symbols-outlined">payments</span>
+                S/. 100,000
+            </template>
+            <template #content>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
+                    quas!
+                </p>
+            </template>
+            <template #footer>
+                <pv-button rounded style="background: #46A2AE; border-style: none; width: 40%; justify-content: center; font-weight: bold;" icon="pi pi-check" label="See More" />
+            </template>
+        </pv-card>
+      </div>
+        <img src="../assets/mivivienda.png"/>
     </div>
-    <div class="card-footer text-muted">
-      2 days ago
-    </div>
-  </div>
   </div>
 </template>
     
 <script>
-    
     export default {
       name: 'HomeS',
-    
+      
       props: {
        // msg: String
       },
-    
+
     }
-    
 </script>
 
 <style>
@@ -121,10 +142,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-  }
-  .card-img{
-    height: 100px;
-    width: 200px;
   }
   .menu-bar {
     background-color: #000000;
@@ -150,4 +167,9 @@
     transition: 0.5s;
   }
   
+  .card-list{
+    display: flex;
+    justify-content: space-around;
+  }
+
 </style>

@@ -40,7 +40,7 @@
 
       <div class="card flex justify-content-center" style="margin-top: 50px;">
         <form @submit="onSubmit" class="flex flex-column align-items-center gap-2">
-            <pv-multiSelect style="width: 20%;" v-model="selectType" :class="{ 'p-invalid': errorMessage }" :options="types" optionLabel="type" placeholder="Select Type" :maxSelectedLabels="3" class="w-full md:w-20rem" aria-describedby="text-error" />
+            <pv-multiSelect style="width: 20%;" v-model="selectType" :class="{ 'p-invalid': errorMessage }" :options="types" optionLabel="type" placeholder="Select Type" :maxSelectedLabels="3" track-by="id" class="w-full md:w-20rem" aria-describedby="text-error" />
               <small id="text-error" class="p-error">{{ errorMessage || '&nbsp;' }}</small>
             <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="submit" label="Submit" />
         </form>
@@ -121,6 +121,7 @@
                 <pv-button rounded style="background: #46A2AE; border-style: none; width: 40%; justify-content: center; font-weight: bold;" icon="pi pi-check" label="See More" />
             </template>
         </pv-card>
+
       </div>
         <img src="../assets/mivivienda.png"/>
     </div>
@@ -128,6 +129,8 @@
 </template>
     
 <script>
+import { ref } from 'vue';
+
     export default {
       name: 'HomeS',
       props: {
@@ -135,20 +138,22 @@
       },
       data(){
         return{
+          selectType,
           types
         }
       }
     }
-
+    const selectType = ref([]);
     const types =[
       { 
-        type: "House",
+        id:1, 
+        type: 'House', 
       },
-      { 
-        type: "Department"
+      {
+        id:2, 
+        type: 'Departement'
       }
     ]
-
 </script>
 
 <style>

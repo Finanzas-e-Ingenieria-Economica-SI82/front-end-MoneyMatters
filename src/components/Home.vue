@@ -7,11 +7,13 @@
           <img style="width:180px; padding: 10px" src="../assets/letter.png"/>
         </div>
         
-        <div class="item">
+        <router-link to="/home">
+          <div class="item">
           <p>
             Inmuebles
           </p>
-        </div>
+          </div>
+        </router-link>
 
         <div class="item">
           <p>
@@ -38,7 +40,7 @@
 
       <div class="card flex justify-content-center" style="margin-top: 50px;">
         <form @submit="onSubmit" class="flex flex-column align-items-center gap-2">
-            <pv-multiSelect style="width: 20%;" v-model="selectType" :class="{ 'p-invalid': errorMessage }" :options="types" optionLabel="name" placeholder="Select Type" :maxSelectedLabels="3" class="w-full md:w-20rem" aria-describedby="text-error" />
+            <pv-multiSelect style="width: 20%;" v-model="selectType" :class="{ 'p-invalid': errorMessage }" :options="types" optionLabel="type" placeholder="Select Type" :maxSelectedLabels="3" class="w-full md:w-20rem" aria-describedby="text-error" />
               <small id="text-error" class="p-error">{{ errorMessage || '&nbsp;' }}</small>
             <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="submit" label="Submit" />
         </form>
@@ -128,12 +130,25 @@
 <script>
     export default {
       name: 'HomeS',
-      
       props: {
        // msg: String
       },
-
+      data(){
+        return{
+          types
+        }
+      }
     }
+
+    const types =[
+      { 
+        type: "House",
+      },
+      { 
+        type: "Department"
+      }
+    ]
+
 </script>
 
 <style>

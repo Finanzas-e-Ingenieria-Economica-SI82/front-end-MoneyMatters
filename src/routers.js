@@ -2,6 +2,7 @@ import Home from './views/Home.vue'
 import SignUp from './components/SignUp.vue'
 import Login from './components/Login.vue'
 import Convert_rate from './views/Convert_rate.vue'
+import CardProperty from './components/CardProperty.vue'
 
 import {createRouter, createWebHistory} from "vue-router";
 const routes=[
@@ -28,6 +29,11 @@ const routes=[
         name: "Convert_rate",
         component: Convert_rate,
         path: '/convert_rate'
+    },
+    {
+        name: "CardProperty",
+        component: CardProperty,
+        path: '/card_property'
     }
     
 ];

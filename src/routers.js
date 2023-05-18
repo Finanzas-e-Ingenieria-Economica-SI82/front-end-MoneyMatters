@@ -1,7 +1,7 @@
-import Home from './components/Home.vue'
+import Home from './views/Home.vue'
 import SignUp from './components/SignUp.vue'
 import Login from './components/Login.vue'
-import Convert_rate from './components/Convert_rate.vue'
+import Convert_rate from './views/Convert_rate.vue'
 
 import {createRouter, createWebHistory} from "vue-router";
 const routes=[

@@ -1,5 +1,6 @@
 <template>
-<div class="card">
+  <app-bar></app-bar>
+  <div class="card">
     <div class="card-header">
       Convert Rate
     </div>
@@ -209,7 +210,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-5">
-              <label>(TN) Taza Nominal Requerida</label>
+              <label>(TN) Tasa Nominal Requerida</label>
               <select id="TREN" class="form-control">
                 <option>Diario</option>
                 <option>Quincenal</option>
@@ -240,7 +241,7 @@
           </div>
         </div>
         <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="button" class="btn btn-primary btn-lg" @click="this.Result">Mostrar</pv-button>
-          <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="button" class="btn btn-secondary btn-lg">Nuevo</pv-button>
+        <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="submit" label="Nuevo" />
         <router-link to="/home">
           <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="button" class="btn btn-secondary btn-lg">Salir</pv-button>
         </router-link>
@@ -254,7 +255,9 @@
 </template>
 
 <script>
+    import AppBar from '../components/AppBar.vue';
     export default {
+      components: { AppBar },
       name: 'Convert_rate',
       data(){
         return{
@@ -398,8 +401,8 @@
     .form-control{
       margin: 10px;
       border-radius: 5px;
-      height: 25px;
-      width: 150px;
+      height: 30px;
+      width: 15%;
     }
     .card-header{
       font-size: 30px;

@@ -23,7 +23,7 @@ import AppBar from '../components/AppBar.vue';
 import CardProperty from './CardProperty.vue';
 import ApiService from '@/services/ApiService';
     export default {
-  components: { AppBar, CardProperty },
+    components: { AppBar, CardProperty },
       name: 'HomeS',
       props: {
        // msg: String

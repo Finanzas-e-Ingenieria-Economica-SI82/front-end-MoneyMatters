@@ -9,7 +9,7 @@
     </v-row>
     <v-row class="grid4">
       <v-col>
-        <div class="col4 md:col-6 lg:col-3" style="padding: 170px; height:90vh; width:85vh; background: #000000ef;">
+        <div class="col4 md:col-6 lg:col-3" style="padding: 170px; height:90vh; width:85vh; background: #000000;">
             <img style="width:50px" src="../assets/logo.png">
             <img style="width:200px; padding: 10px" src="../assets/letter.png">
             <div style="margin-top: 50px;">

@@ -80,7 +80,7 @@ export default {
         max-height: 100vh;
     }
     .col1{
-        background: #000000ef;
+        background: #000000;
     }
     .col2{
         box-shadow: 2px 3px 20px 6px rgba(0, 0, 0, 0.137);

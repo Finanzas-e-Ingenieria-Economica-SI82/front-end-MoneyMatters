@@ -1,8 +1,9 @@
 import Home from './views/Home.vue'
 import SignUp from './components/SignUp.vue'
 import Login from './components/Login.vue'
+import FrenchMethod from './views/FrenchMethod.vue'
 import Convert_rate from './views/Convert_rate.vue'
-import CardProperty from './components/CardProperty.vue'
+import CardProperty from './views/CardProperty.vue'
 
 import {createRouter, createWebHistory} from "vue-router";
 const routes=[
@@ -34,6 +35,11 @@ const routes=[
         name: "CardProperty",
         component: CardProperty,
         path: '/card_property'
+    },
+    {
+        name: "FrenchMethod",
+        component: FrenchMethod,
+        path: '/french_method'
     }
     
 ];

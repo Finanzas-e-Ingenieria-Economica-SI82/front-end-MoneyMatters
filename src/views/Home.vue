@@ -10,8 +10,9 @@
   <pv-toast/>
 </div>
 <div class="card-list md:col-6 lg:col-3" style="padding: 40px; margin-top: 40px; margin: 10px;">
-<card-property v-for="property in properties" :key="property.id" :property="property" />
+<card-property v-for="property in properties" :key="property.id" :property="property" @see-more="showPopup(property)"/>
 </div>
+<popup v-if="showPopupFlag" :property="selectedProperty" @close-popup="closePopup" />
   </div>
 
   
@@ -22,8 +23,9 @@ import { ref } from 'vue';
 import AppBar from '../components/AppBar.vue';
 import CardProperty from './CardProperty.vue';
 import ApiService from '@/services/ApiService';
+import Popup from './Popup.vue';
     export default {
-    components: { AppBar, CardProperty },
+    components: { AppBar, CardProperty, Popup   },
       name: 'HomeS',
       props: {
        // msg: String
@@ -33,9 +35,24 @@ import ApiService from '@/services/ApiService';
           properties:[],
           errorMessage: '',
           selectType,
-          types
+          types,
+          showPopupFlag: false,
+          selectedProperty: null,
     }
       },
+      methods: {
+    onSubmit() {
+      // Handle form submission
+    },
+    showPopup(property) {
+      this.showPopupFlag = true;
+      this.selectedProperty = property;
+    },
+    closePopup() {
+      this.showPopupFlag = false;
+      this.selectedProperty = null;
+    },
+  },
       created() {
 		ApiService.getProperties()
     

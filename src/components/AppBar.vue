@@ -13,12 +13,13 @@
           </div>
         </router-link>
 
+        <router-link to="/french_method">
         <div class="item">
           <p>
             Crédito
           </p>
         </div>
-
+      </router-link>
         <router-link to="/convert_rate">
           <div class="item">
             <p>

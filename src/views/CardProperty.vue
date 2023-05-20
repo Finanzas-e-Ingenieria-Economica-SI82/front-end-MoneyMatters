@@ -27,7 +27,7 @@
           </p>
       </template>
       <template #footer>
-          <pv-button rounded style="background: #46A2AE; border-style: none; width: 40%; justify-content: center; font-weight: bold;" icon="pi pi-check" label="See More" />
+          <pv-button rounded style="background: #46A2AE; border-style: none; width: 40%; justify-content: center; font-weight: bold;" icon="pi pi-check" label="See More" @click="$emit('see-more')"  />
       </template>
   </pv-card>
 

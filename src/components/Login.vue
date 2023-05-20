@@ -16,11 +16,16 @@
               <input type="text" v-model="username" id="username" name="username" placeholder="Username" />
               <input type="password" v-model="password" id="password" name="password" placeholder="Password" />    
             </div>
-              <router-link to="/home">
-                <pv-button rounded style="margin-top: 15px; background: #46A2AE; border-style: none; width: 30%; justify-content: center; font-weight: bold;" v-on:click="login">Log In</pv-button>
-              </router-link>
+                <pv-button rounded style="margin-top: 20px; background: #46A2AE; border-style: none; width: 30%; justify-content: center; font-weight: bold;" v-on:click="login">Log In</pv-button>
             <p v-if="error" class="error">{{ error }}</p>
+            <div style="padding: auto;"><router-link to="/sign-up">
+          <label style="padding: auto; border-style: none; width: 30%; justify-content: center; font-weight: bold;">SingUp</label>
+
+        </router-link></div>
+            
         </div>
+        
+
       </v-col>
     </v-row>
   </v-container>
@@ -28,7 +33,7 @@
 
 <script>
 //import { response } from 'express';
-
+import axios from 'axios';
     export default {
       name: 'LogiN',
     
@@ -45,9 +50,19 @@
       },
 
       methods:{
-      
+        async login(){
+          let result = await axios.get("http://localhost:3000/users?username="+this.username+"&password="+this.password)
+          if(result.status == 200 && result.data.length > 0){
+            
+            localStorage.setItem('user-info', JSON.stringify(result.data))
+            this.$router.push('/home')
+          
+        }else(
+          this.error = 'Usuario o contraseña incorrectos')
+        //console.warn(result);
+        
     },
-  }  
+  }  }
 </script>
 
 <style>

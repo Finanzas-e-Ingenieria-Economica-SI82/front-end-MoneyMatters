@@ -27,6 +27,12 @@ import Popup from './Popup.vue';
     export default {
     components: { AppBar, CardProperty, Popup   },
       name: 'HomeS',
+      mounted(){
+          let user = localStorage.getItem('user-info');
+          if(!user){
+            this.$router.push('/sign-up')
+          }
+      },
       props: {
        // msg: String
       },

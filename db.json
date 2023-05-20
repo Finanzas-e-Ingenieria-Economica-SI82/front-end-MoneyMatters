@@ -1,8 +1,16 @@
 {
   "users": [
-
+    {
+      "username": "Admin1",
+      "password": "admin1",
+      "name": "Admin",
+      "lastname": "Admin",
+      "dni": "111111111",
+      "phone": "999999999",
+      "id": 1
+    }
   ],
-  "properties":[
+  "properties": [
     {
       "id": 1,
       "name": "Departamento Moderna",
@@ -31,6 +39,6 @@
       "imageUrl": "https://www.construyehogar.com/wp-content/uploads/2016/01/Casa-moderna-un-piso.jpg"
     }
   ],
-  "credits":[],
-  "paymentsPlan":[]
+  "credits": [],
+  "paymentsPlan": []
 }

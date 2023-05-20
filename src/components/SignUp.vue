@@ -23,17 +23,19 @@
                     <h1 style="color: #46A2AE; font-weight: bold"> Create Your Account </h1>
                         <div class="register" flex flex-wrap justify-content-center gap-2>
                             <input type="name" v-model="name" v-tooltip.top="'Enter your username'" placeholder="Name"/>
-                            <input type="lastname" v-model="name" placeholder="Lastname"/>
+                            <input type="lastname" v-model="lastname" placeholder="Lastname"/>
                             <input type="username" v-model="username" placeholder="Username"/>
                             <input type="password" v-model="password" placeholder="Password"/>
                             <input type="dni" v-model="dni" placeholder="DNI"/>
-                            <input type="phone" v-model="dni" placeholder="Phone"/>
+                            <input type="phone" v-model="phone" placeholder="Phone"/>
                             <pv-button rounded style="margin-top: 10px; background: #46A2AE; border-style: none; width: 30%; justify-content: center; font-weight: bold;" v-on:click="msg">Sign Up</pv-button>
+                            <p v-if="error" class="error">{{ error }}</p>
                         </div>
                 </div>
             </v-col>
         </v-row>
     </v-container>
+    
     <router-link to="/sign-up"></router-link>
 </template>
 
@@ -49,31 +51,43 @@ export default {
     data(){
     return{
         username:'',
-        password:''
+        password:'',
+        name:'',
+        lastname:'',
+        dni:'',
+        phone:'',
+        error:''
     }
     },
 
     methods:{
     async msg(){
-        if( this.username.value!=null || this.password.value!=" " ){
+        if(this.username!='' && this.password!='' && this.name!='' && this.lastname!='' && this.dni!='' && this.phone!=''){
             let result =await axios.post("http://localhost:3000/users",
         {username: this.username,
-        password:this.password
+        password:this.password,
+        name:this.name,
+        lastname:this.lastname,
+        dni:this.dni,
+        phone:this.phone
         });
         console.warn(result);
         if(result.status==201){
             alert("Se registró correctamente.")
-            localStorage.setItem("user-info",JSON.stringify(result.data))
-            this.$router.push({name:'HomeS'})
+            localStorage.setItem("user-info",JSON.stringify(result.data[0]))
+            this.$router.push({name:'LogiN'})
         }
         }
-        else alert("It's necesary someone username or password bitch")
+        else this.error="Complete todos los campos obligatorios * ."
     }
     }
 }
 </script>
     
 <style>
+.error {
+      color: red;
+    }
     .sing-up{
         display: flex;
         max-width: 100vh;

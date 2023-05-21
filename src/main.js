@@ -15,6 +15,9 @@ import Divider from 'primevue/divider';
 import MultiSelect from 'primevue/multiselect';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
+import Password from 'primevue/password';
+import Message from 'primevue/message';
+import TabMenu from 'primevue/tabmenu';
 //theme
 import "primevue/resources/themes/lara-light-indigo/theme.css";     
 //core
@@ -37,5 +40,8 @@ app.component('pv-row', Row);
 app.component('pv-divider', Divider);
 app.component('pv-multiSelect', MultiSelect);
 app.component('pv-toast', Toast);
+app.component('pv-password', Password );
+app.component('pv-message', Message );
+app.component('pv-menu', TabMenu );
 
 app.mount('#app')

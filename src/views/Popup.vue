@@ -25,15 +25,15 @@
               </div>
               <div class="detail">
                 <span class="material-symbols-outlined">kitchen</span>
-               {{ property.cocina }}
+                {{ property.cocina }}
               </div>
               <div class="detail">
                 <span class="material-symbols-outlined">weekend</span>
-                 {{ property.sala }}
+                {{ property.sala }}
               </div>
               <div class="detail">
                 <span class="material-symbols-outlined">garage</span>
-              {{ property.cochera}}
+                {{ property.cochera}}
               </div>
             </div>
             <p>{{ property.description }}</p>

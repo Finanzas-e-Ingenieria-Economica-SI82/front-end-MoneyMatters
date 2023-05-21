@@ -242,7 +242,7 @@
         </div>
         <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="button" class="btn btn-primary btn-lg" @click="this.Result">Mostrar</pv-button>
         <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="submit" label="Nuevo" />
-        <router-link to="/home">
+        <router-link to="/french_method">
           <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="button" class="btn btn-secondary btn-lg">Salir</pv-button>
         </router-link>
         <div class="form-group col-md-6">
@@ -280,6 +280,7 @@
 
   },
   methods:{
+
     changeConversion(){
       this.typeConversion = document.getElementById('inputState').value;
     },

@@ -15,9 +15,8 @@
 <popup v-if="showPopupFlag" :property="selectedProperty" @close-popup="closePopup" />
   </div>
 
-  
 </template>
-    
+
 <script>
 import { ref } from 'vue';
 import AppBar from '../components/AppBar.vue';
@@ -71,17 +70,15 @@ import Popup from './Popup.vue';
 			});
 	},
     }
-const selectType = ref([]);
-const types =[
-  { 
-    id:1, 
-    type: 'House', 
+const selectType = ref();
+const types = ref([
+  {  
+    type: 'Casa', 
   },
   {
-    id:2, 
-    type: 'Departement'
+    type: 'Departamento'
   }
-]
+]);
 </script>
 
 <style>

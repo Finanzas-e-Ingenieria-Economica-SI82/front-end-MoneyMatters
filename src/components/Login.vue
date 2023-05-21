@@ -16,16 +16,15 @@
               <input type="text" v-model="username" id="username" name="username" placeholder="Username" />
               <input type="password" v-model="password" id="password" name="password" placeholder="Password" />    
             </div>
-                <pv-button rounded style="margin-top: 20px; background: #46A2AE; border-style: none; width: 30%; justify-content: center; font-weight: bold;" v-on:click="login">Log In</pv-button>
             <p v-if="error" class="error">{{ error }}</p>
-            <div style="padding: auto;"><router-link to="/sign-up">
-          <label style="padding: auto; border-style: none; width: 30%; justify-content: center; font-weight: bold;">SingUp</label>
-
-        </router-link></div>
-            
+                <pv-button rounded style="margin-top: 20px; background: #46A2AE; border-style: none; width: 40%; justify-content: center; font-weight: bold;" v-on:click="login">Log In</pv-button>
+            <div style="padding: auto;">
+              <router-link to="/sign-up">
+                <pv-button rounded style="margin-top: 20px; background: #46A2AE; border-style: none; width: 40%; justify-content: center; font-weight: bold;">Sing Up</pv-button>
+              </router-link>
+            </div>
         </div>
         
-
       </v-col>
     </v-row>
   </v-container>
@@ -48,7 +47,6 @@ import axios from 'axios';
           error: ''
         }
       },
-
       methods:{
         async login(){
           let result = await axios.get("http://localhost:3000/users?username="+this.username+"&password="+this.password)
@@ -62,6 +60,7 @@ import axios from 'axios';
         //console.warn(result);
         
     },
+    
   }  }
 </script>
 

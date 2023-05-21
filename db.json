@@ -15,27 +15,40 @@
       "id": 1,
       "name": "Departamento Moderna",
       "dimension": "100,00",
+      "numero": "104",
       "type": "Departamento",
       "numDormitorios": "4",
       "price": "200,000",
+      "cochera":"1 carros",
+      "sala": "Sala pequeña",
+      "cocina": "Cocina mediana",
       "imageUrl": "https://www.construyehogar.com/wp-content/uploads/2016/01/Casa-moderna-un-piso.jpg"
     },
     {
       "id": 2,
       "name": "Casa Moderna",
       "dimension": "100,00",
+      "numero": "205",
       "type": "Casa",
       "numDormitorios": "4",
       "price": "200,000",
+      "cochera":"3 carros",
+      "sala": "Sala grande",
+      "cocina": "Cocina pequeña",
       "imageUrl": "https://www.construyehogar.com/wp-content/uploads/2016/01/Casa-moderna-un-piso.jpg"
     },
     {
       "id": 3,
       "name": "Casa Moderna",
       "dimension": "100,00",
+      "numero": "407",
       "type": "Casa",
       "numDormitorios": "4",
       "price": "200,000",
+      "cochera":"2 carros",
+      "sala": "Sala enorme",
+      "cocina": "Cocina grande",
+
       "imageUrl": "https://www.construyehogar.com/wp-content/uploads/2016/01/Casa-moderna-un-piso.jpg"
     }
   ],

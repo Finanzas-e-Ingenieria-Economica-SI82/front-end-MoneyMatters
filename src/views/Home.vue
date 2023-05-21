@@ -25,7 +25,7 @@ import CardProperty from './CardProperty.vue';
 import ApiService from '@/services/ApiService';
 import Popup from './Popup.vue';
     export default {
-    components: { AppBar, CardProperty, Popup   },
+    components: { AppBar, CardProperty, Popup },
       name: 'HomeS',
       mounted(){
           let user = localStorage.getItem('user-info');

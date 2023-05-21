@@ -1,33 +1,50 @@
 <template>
   <div class="popup-overlay">
     <div class="popup-container">
+      <h1 class="popup-title">{{ property.name }}</h1>
+      <h2 class="popup-subtitle">{{property.numero}}</h2>
       <button class="close-button" @click="closePopup">×</button>
       <div class="content-wrapper">
-        <div class="image-container">
-          <img :src="property.imageUrl" alt="property image" />
-        </div>
-        <div class="text-container">
-          <h2>{{ property.departamento }}</h2>
-          <p>{{ property.description }}</p>
-          <div class="property-details">
-            <div class="detail">
-              <span class="material-symbols-outlined">bed</span>
-              {{ property.numDormitorios }} Dormitorios
+        <div class="image-text-container">
+          <div class="image-container">
+            <img :src="property.imageUrl" alt="property image" />
+          </div>
+          <div class="text-container">
+            <div class="property-details">
+              <div class="detail">
+                <span class="material-symbols-outlined">bed</span>
+                {{ property.numDormitorios }} Dormitorios
+              </div>
+              <div class="detail">
+                <span class="material-symbols-outlined">design_services</span>
+                {{ property.dimension }} m2
+              </div>
+              <div class="detail">
+                <span class="material-symbols-outlined">payments</span>
+                S/. {{ property.price }}
+              </div>
+              <div class="detail">
+                <span class="material-symbols-outlined">kitchen</span>
+               {{ property.cocina }}
+              </div>
+              <div class="detail">
+                <span class="material-symbols-outlined">weekend</span>
+                 {{ property.sala }}
+              </div>
+              <div class="detail">
+                <span class="material-symbols-outlined">garage</span>
+              {{ property.cochera}}
+              </div>
             </div>
-            <div class="detail">
-              <span class="material-symbols-outlined">design_services</span>
-              {{ property.dimension }} m2
-            </div>
-            <div class="detail">
-              <span class="material-symbols-outlined">payments</span>
-              S/. {{ property.price }}
-            </div>
+            <p>{{ property.description }}</p>
           </div>
         </div>
         <div class="button-container">
-          <router-link to="/french_method">
-          <button class="credit-button" @click="goToCredit">Go to Crédito</button>
-          </router-link>
+          <div class="credit-container">
+            <router-link to="/french_method">
+              <button class="credit-button" @click="goToCredit">Go to Crédito</button>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -69,6 +86,20 @@ export default {
   padding: 40px;
   border-radius: 10px;
   text-align: center;
+  position: relative;
+  max-width: 100%;
+  margin-top: 40px; /* Agregar espacio superior */
+}
+
+.popup-title {
+  font-size: 30px;
+  margin-bottom: 20px; /* Aumentar el espacio inferior entre el título y el subtítulo */
+}
+
+.popup-subtitle {
+  font-size: 18px;
+  margin-bottom: 20px; /* Aumentar el espacio inferior entre el subtítulo y el botón de cierre */
+  color: #555;
 }
 
 .close-button {
@@ -87,33 +118,54 @@ export default {
   align-items: center;
 }
 
-.image-container {
-  order: 1;
+.image-text-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px; /* Reducir el espacio entre la imagen y el texto */
+  gap: 20px; /* Reducir el espacio entre los elementos */
 }
+
 
 .popup-container img {
-  width: 500px;
-  height: auto;
-  margin-bottom: 20px;
+  max-width: 100%;
+  max-height: 300px;
+  margin-bottom: 40px; /* Aumentar el espacio inferior si se desea más separación */
 }
 
+
 .text-container {
-  order: 2;
-  margin-bottom: 20px;
+  flex: 1 1 auto;
+  text-align: center;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .property-details {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 160px;
 }
 
 .detail {
-  margin: 0 10px;
+  margin-bottom: 10px;
+  text-align: left; 
 }
 
+
 .button-container {
-  order: 3;
+  order: 2;
+  align-self: flex-end; /* Alinear el contenedor de botones al inicio */
+  margin-top: -170px; /* Reducir el margen superior para acercarlo al texto */
+  margin-bottom: 40px; /* Aumentar el margen inferior para separarlo del texto */
+}
+
+.credit-button {
+  text-align: center;
 }
 
 .popup-container button {

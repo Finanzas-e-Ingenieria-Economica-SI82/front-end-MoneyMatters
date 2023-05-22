@@ -1,50 +1,81 @@
 <template>
-   <nav class="menu-bar">
+  <nav class="menu-bar">
         <div class="group">
-          <img style="width:30px; height: 50px; margin: 15px; margin-left: 30px;" src="../assets/logo.png"/>
-          <img style="width:180px; padding: 10px" src="../assets/letter.png"/>
-        </div>
-        
-        <router-link to="/home">
-          <div class="item">
-          <p>
-            Inmuebles
-          </p>
-          </div>
-        </router-link>
-
-        <router-link to="/french_method">
-        <div class="item">
-          <p>
-            Crédito
-          </p>
-        </div>
-      </router-link>
-        <router-link to="/convert_rate">
-          <div class="item">
-            <p>
-                Setting
-            </p>
-          </div>
-        </router-link>
-
-        <div class="group">
-          <router-link to="/sign-up">
-            <span class="material-symbols-outlined" style="color:white; margin-top: 20px; padding-right: 50px; justify-content: center; align-content: center;">
-            logout
+          <a>
+            <img style="width:30px; height: 50px; margin: 15px; margin-left: 30px;" src="../assets/logo.png"/>
+            <img style="width:180px; padding: 10px" src="../assets/letter.png"/>
+          </a>
+          <span class="btn-menu">
+            <span class="hidden material-symbols-outlined">
+            menu
             </span>
-          </router-link>
+          </span>
         </div>
+        <div class="list-container">
+          <ul class="lists">
+
+            <router-link to="/home">
+            <li>
+              <a>
+                <div class="item">
+                <p>
+                Inmuebles
+                </p>
+                </div>
+              </a>
+            </li>
+            </router-link>
+
+          <router-link to="/french_method">
+          <li>
+            <a>
+              <div class="item">
+              <p>
+                Crédito
+              </p>
+              </div>
+            </a>
+          </li>
+          </router-link>
+
+          <router-link to="/convert_rate">
+          <li>
+            <a>
+              <div class="item">
+              <p>
+                Setting
+              </p>
+              </div>
+            </a>
+          </li>
+          </router-link>
+
+          <router-link to="/sign-up">
+            <lia>
+              <a>
+                <span class="material-symbols-outlined" style="color:rgb(255, 255, 255); margin-top: 20px; padding-right: 50px; justify-content: center; align-content: center;">
+                logout
+                </span>
+              </a>
+            </lia>
+          </router-link>
+          </ul>
+        </div>
+
       </nav>
 </template>
 
 <script>
 
     export default {
+      components: {},
       name: 'AppBar',
       data(){
+      },
+      methods: {
       }
     }
+    
 </script>
 
 <style>
@@ -55,28 +86,101 @@
     color: #2c3e50;
   }
   .menu-bar {
-    background-color: #000000;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: #000000;;
+
     display: flex;
     justify-content: space-between;
-    box-sizing: border-box;
     align-items: center;
-    inline-size: center;
+    z-index: 9999;
+  }
+  .menu-bar .list-container{margin-right: 20px;}
+  .menu-bar .list-container ul{display: flex;}
+  .menu-bar .list-container ul li{list-style: none;}
+  .menu-bar .list-container ul li a{
+    text-decoration: none;
+    margin: 0px 10px;
+    padding:8px;
+    color: #000000;
+    border-radius: 24px;
+    transition: 0.3s;
+    font-size: 16px;
+  }
+  .menu-bar .list-container ul li a.active{
+    background: #46A2AE;
+    color:#000000;
+  }
+  .menu-bar .list-container ul li a:hover{
+    background: #46A2AE;
+    color:#000000;
+  }
+
+  .btn-menu > .hidden{
+    display: none;
   }
 
   .item {
-    color: white;
+    color: rgb(255, 255, 255);
     background-color: transparent;
     font-size: 18px;
     display: inline-block;
     padding: 5px;
   }
 
-  .item:hover {
-    background-color: rgba(150, 149, 153, 0.712);
-    border-radius: 15px;
-    pointer-events: none;
-    transition: 0.5s;
-  }
-
+  
+@media only screen and (max-width:900px){
+    .btn-menu > .hidden{
+        display: block;
+        position:absolute;
+        right: 30px;
+        top: 20px;
+        font-size: 28px;
+        color: #ffff;
+        transition: 0.5s;
+        cursor: pointer;
+    }
+    .btn-menu > .fa-times{color: #46A2AE;}
+    .btn-menu > .hidden:hover{color:#46A2AE;}
+    .menu-bar .logo-box{margin-left: 30px;}
+    .menu-bar .list-container{
+        position: fixed;
+        top:60px;
+        left:-100%;
+        background:#ffffff;
+        width: 100%;
+        height: calc(100vh - 60px);
+    }
+    .menu-bar .list-container .lists{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-top:4px solid #46A2AE;
+    }
+    .menu-bar .list-container ul li{
+        width: 90%;
+        border-bottom: 2px solid #ffffff;
+        display: flex;
+        justify-content: center;
+    }
+    .menu-bar .list-container ul li a{
+        font-size: 20px;
+        text-align: center;
+        padding:12px 0px;
+    }
+    .menu-bar .list-container ul li a.active{
+        background: none;
+        color:#46A2AE;
+    }
+    .menu-bar .list-container ul li a:hover{
+        background: none;
+        color:#46A2AE;
+    }
+}
 
 </style>

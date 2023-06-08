@@ -62,7 +62,7 @@ export default {
       this.$emit('close-popup');
     },
     goToCredit() {
-      // Implement your logic to navigate to the credit page
+      this.$emit('goToCredit');
     },
   },
 };

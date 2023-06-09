@@ -102,17 +102,18 @@
 		<div id="resultado">
 			<div v-if="cuotaMensual !== null">
 				<div>
-					<label for="TEB"> TEB: {{ Math.pow(1 + this.TEA, 1/12) - 1 }}</label>
+					<label for="TEB"> TEB: {{ TEB}}</label>
 				</div>
 				<div>
 					<label for="numero_cuotas_total"> Numero total de Cuotas: {{ year*12}}</label>
 				</div>
 				<div>
-					<label for="Seguro_desgrav_per"> % Seguro desgrav. per.: {{ seguro_desg/12}}</label>
+					<label for="Seguro_desgrav_per"> % Seguro desgrav. per.: {{ Seguro_desgrav_per}}</label>
 				</div>
 				<div>
-					<label for="Seguro_riesgo_per"> % Seguro riesgo: {{seguro_riesgo /12 }}</label>
+					<label for="Seguro_riesgo_per"> % Seguro riesgo: {{Seguro_riesgo_per }}</label>
 				</div>
+
 				<!-- <div>Cuota a pagar mensualmente: {{ cuotaMensual.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div>
 				<div>Capital Inicial: {{ importe.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div> -->
 			</div>
@@ -167,6 +168,7 @@
 			Seguro_desgrav_per: 0.0,
 			Seguro_riesgo_per: 0.0,
 			cuotaMensual: null,
+			cuota:0.0,
 			tabla: [],
 			totalIntereses: null,	
 
@@ -174,37 +176,42 @@
     },
     methods: {
 		calcular() {
-			let saldo = parseFloat(this.importe+ this.porc_inicial*this.importe/100 + this.coste_notarial + this.coste_registro + this.comision);
+			let TEB = (Math.pow(1 + this.TEA, 1/12) - 1)/100 ;
+			let saldo = this.importe+ this.porc_inicial*this.importe/100 + this.coste_notarial + this.coste_registro + this.comision;
 			let year = parseInt(this.year);
-			let tasa = parseFloat(this.TEB);
+			this.Seguro_desgrav_per = (this.seguro_desg/12)/100;
+			this.Seguro_riesgo_per = (this.seguro_riesgo/12)/100;
 
-				tasa = (tasa / 100);
-				const m = (saldo * tasa * (Math.pow((1 + tasa), (year * 12)))) / ((Math.pow((1 + tasa), (year * 12))) - 1);
-
-				this.cuotaMensual = m;
+			//TEB = (TEB / 100);
+				//const m = (saldo * TEB * (Math.pow((1 + TEB), (year * 12)))) / ((Math.pow((1 + TEB), (year * 12))) - 1);
+			this.cuotaMensual = (saldo*(TEB+this.Seguro_desgrav_per))/(1-Math.pow(1+(TEB+this.Seguro_desgrav_per), (-72)));
+				//this.cuotaMensual = m;
 
 				this.tabla = [];
 				let totalInt = 0;
-				for (let i = 1; i <= year * 12; i++) {
-					totalInt = totalInt + (saldo * tasa);
-                    console.log(saldo);
-                    console.log(tasa);
-                    console.log(saldo*tasa);
 
+				for (let i = 1; i <= year * 12; i++) {
+					
+					//totalInt = totalInt + (saldo * TEB);
+					//this.amortizacion=this.intereses + this.seguro_desg + this.cuotaMensual;
+                    console.log(saldo);
+                    console.log(TEB);
+                    console.log(saldo*TEB);
+					console.log(this.amortizacion);
                     //let copia = (saldo * tasa);
-                    saldo = saldo - (m - (saldo * tasa));
+                    //saldo = saldo - (m - (saldo * TEB));
                     
 					const row = {
-						periodo: i,
-						saldo: this.saldo,
-						intereses: this.TEB * saldo,
-						amortizacion: this.intereses + this.seguro_desg + this.cuotaMensual,
-						capitalPendiente: saldo < 0 ? "0" : saldo.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						periodo: i, 
+						saldo: this.periodo==1 ? (saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}): (saldo - this.amortizacion).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						intereses: (TEB * saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						cuota: this.cuotaMensual.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 						portes: this.portes,
 						gastos_admin: this.gastos_Admin,
-						seguro_desgrv: this.Seguro_desgrav_per * saldo,
-						seguro_riesgo: this.Seguro_riesgo_per * saldo,
-						
+						seguro_desgrv: (this.Seguro_desgrav_per * saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						seguro_riesgo: (this.Seguro_riesgo_per * saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						flujo: (this.cuotaMensual + this.portes + this.gastos_Admin+this.Seguro_riesgo_per ).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						amortizacion: ((TEB * saldo)+this.cuotaMensual+(this.Seguro_desgrav_per * saldo)).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 					};
 					this.tabla.push(row);
                     //saldo = saldo - (m - (saldo * tasa));

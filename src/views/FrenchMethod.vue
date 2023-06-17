@@ -11,18 +11,12 @@
 		<div class="p-field">
 			<label for="importe">Valor de la propiedad (S/.):</label>
             <input class="form-control" v-model="importe" :min="0" :max="100">
-            <!--
-                <InputNumber v-model="porc_inicial" :min="0" :max="100" suffix="%"></InputNumber>
-            -->
 		</div>
 
 		<div class="p-field">
 			<label for="porc_inicial">% Cuota Inicial :</label>
-            <input class="form-control" v-model="porc_inicial" :min="0" :max="100" suffix="%">
+            <input class="form-control" v-model="porc_inicial" :min="7.5" :max="30" suffix="%">
 			<label style="font-weight: bold;">(7.5% - 30%)</label>
-            <!--
-                <InputNumber v-model="porc_inicial" :min="0" :max="100" suffix="%"></InputNumber>
-            -->
 		</div>
 
 		<div class="p-field">
@@ -32,11 +26,8 @@
 
 		<div class="p-field">
 			<label for="year">Plazo :</label>
-            <input class="form-control" v-model="year" :min="1" :max="1000">
+            <input class="form-control" v-model="year" :min="1" :max="100">
 			<label style="font-weight: bold;">(años)</label>
-            <!--
-                <InputNumber v-model="year" :min="1" :max="50"></InputNumber>
-            -->
 		</div>
 
 		<div class="p-field">
@@ -53,38 +44,38 @@
 
 		<div class="p-field">
 			<label for="coste_notarial">Coste notarial:</label>
-            <input class="form-control" v-model="coste_notarial" :min="1" :max="50">
+            <input class="form-control" v-model="coste_notarial" :min="1" :max="1000">
 		</div>
 
 		<div class="p-field">
 			<label for="coste_registro">Coste de registro:</label>
-            <input class="form-control" v-model="coste_registro" :min="1" :max="50">
+            <input class="form-control" v-model="coste_registro" :min="1" :max="1000">
 		</div>
 
 		<div class="p-field">
 			<label for="comision">Comisión de estudio:</label>
-            <input class="form-control" v-model="comision" :min="1" :max="50">
+            <input class="form-control" v-model="comision" :min="1" :max="1000">
 		</div>
 
 		<div class="p-field">
 			<label for="portes">Portes:</label>
-            <input class="form-control" v-model="portes" :min="1" :max="50">
+            <input class="form-control" v-model="portes" :min="1" :max="1000">
 		</div>
 
 		<div class="p-field">
 			<label for="gastos_Admin">Gastos de Administración:</label>
-            <input class="form-control" v-model="gastos_Admin" :min="1" :max="50">
+            <input class="form-control" v-model="gastos_Admin" :min="1" :max="1000">
 		</div>
 
 		<div class="p-field">
 			<label for="seguro_desg">% de Seguro de desgravament:</label>
-            <input class="form-control" v-model="seguro_desg" :min="7.5" :max="30" suffix="%">
+            <input class="form-control" v-model="seguro_desg" :min="0" :max="100" suffix="%">
 			<label style="font-weight: bold;">(Anual)</label>
 		</div>
 
 		<div class="p-field">
 			<label for="seguro_riesgo">% de Seguro de riesgo:</label>
-            <input class="form-control" v-model="seguro_riesgo" :min="7.5" :max="30" suffix="%">
+            <input class="form-control" v-model="seguro_riesgo" :min="0" :max="100" suffix="%">
 			<label style="font-weight: bold;">(Anual)</label>
 		</div>
 
@@ -98,26 +89,29 @@
 		<div>
 			<pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" label="Calcular" @click="calcular"></pv-button>
 		</div>
-
+		<br>
 		<div id="resultado">
 			<div v-if="cuotaMensual !== null">
 				<div>
-					<label for="TEB"> TEB: {{ TEB}}</label>
+					<label for="TEM"> TEM: {{ ((Math.pow(1 + this.TEA, 1/12) - 1)*100).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}} % </label>
 				</div>
 				<div>
 					<label for="numero_cuotas_total"> Numero total de Cuotas: {{ year*12}}</label>
 				</div>
 				<div>
-					<label for="Seguro_desgrav_per"> % Seguro desgrav. per.: {{ Seguro_desgrav_per}}</label>
+					<label for="Seguro_desgrav_per"> % Seguro desgrav. per.: {{ Seguro_desgrav_per.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2})}} % </label>
 				</div>
 				<div>
-					<label for="Seguro_riesgo_per"> % Seguro riesgo: {{Seguro_riesgo_per }}</label>
+					<label for="Seguro_riesgo_per"> % Seguro riesgo: {{Seguro_riesgo_per.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} % </label>
+				</div>
+				<div>
+					<label for="Seguro_riesgo_per"> VAN : {{  }} </label>
 				</div>
 
 				<!-- <div>Cuota a pagar mensualmente: {{ cuotaMensual.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div>
 				<div>Capital Inicial: {{ importe.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div> -->
 			</div>
-
+<br> 
 			<pv-datatable v-if="tabla.length > 0" :value="tabla" :rows="tabla.length">
 				<pv-column field="periodo" header="Periodo"></pv-column>
 				<pv-column field="saldo" header="Saldo"></pv-column>
@@ -131,7 +125,7 @@
 				<pv-column field="flujo" header="Flujo"></pv-column>
 			</pv-datatable>
 
-			<div style="font-size: 30px; font-family: 'Josefin Sans', sans-serif; padding-top: 30px;" v-if="totalIntereses !== null">Pago total de intereses: {{ totalIntereses.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 7}) }} $</div>
+			<!-- <div style="font-size: 30px; font-family: 'Josefin Sans', sans-serif; padding-top: 30px;" v-if="totalIntereses !== null">Pago total de intereses: {{ totalIntereses.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 7}) }} $</div> -->
 		</div>
 	</div>
 	<!-- </div> -->
@@ -139,7 +133,7 @@
 </template>
 
 <script>
-    import AppBar from '../components/AppBar.vue';
+import AppBar from '../components/AppBar.vue';
 	import ApiService from '@/services/ApiService';
     export default{
     name: 'FrenchMethod',
@@ -151,7 +145,7 @@
 			porc_inicial: 12,
 			year: 6,
 			frecuencia_pago: 1,
-			plazo_gracia: 0,
+			plazo_gracia: 12,
 			coste_notarial: 250,
 			coste_registro:150,
 			comision:100,
@@ -161,7 +155,7 @@
 			seguro_riesgo: 0.30,
 			COK: 35,	
 			TEA: 0.16,
-			TEB: 0.0,
+			TEM: 0.0,
 			monto_prestamo: 0,	
 			cuotas_x_año: 0,
 			numero_cuotas_total: 0,
@@ -176,49 +170,71 @@
     },
     methods: {
 		calcular() {
-			let TEB = (Math.pow(1 + this.TEA, 1/12) - 1)/100 ;
-			let saldo = this.importe+ this.porc_inicial*this.importe/100 + this.coste_notarial + this.coste_registro + this.comision;
+			//let cuotaCopia = 0;
+			let TEM = (Math.pow(1 + this.TEA, 1/12) - 1) ;
+			let saldoi = this.importe-(this.importe*(this.porc_inicial/100)) + this.coste_notarial + this.coste_registro + this.comision;
+			let saldo = this.importe-(this.importe*(this.porc_inicial/100)) + this.coste_notarial + this.coste_registro + this.comision;
 			let year = parseInt(this.year);
-			this.Seguro_desgrav_per = (this.seguro_desg/12)/100;
-			this.Seguro_riesgo_per = (this.seguro_riesgo/12)/100;
-
-			//TEB = (TEB / 100);
-				//const m = (saldo * TEB * (Math.pow((1 + TEB), (year * 12)))) / ((Math.pow((1 + TEB), (year * 12))) - 1);
-			this.cuotaMensual = (saldo*(TEB+this.Seguro_desgrav_per))/(1-Math.pow(1+(TEB+this.Seguro_desgrav_per), (-72)));
+			this.Seguro_desgrav_per = (this.seguro_desg/12);
+			this.Seguro_riesgo_per = (this.seguro_riesgo/12);
+			//this.cuotaMensual = (saldo*(TEM+this.Seguro_desgrav_per))/(1-Math.pow(1+(TEM+this.Seguro_desgrav_per), (-72)));
 				//this.cuotaMensual = m;
-
+			
 				this.tabla = [];
 				let totalInt = 0;
+				let prevSaldo = saldoi;
+				for (let i = 0; i <= year * 12; i++) {
+					if(i==this.plazo_gracia){
+						var cuotaCopia = saldo;
+					}
+					//var valorCuota = 
 
-				for (let i = 1; i <= year * 12; i++) {
-					
-					//totalInt = totalInt + (saldo * TEB);
-					//this.amortizacion=this.intereses + this.seguro_desg + this.cuotaMensual;
-                    console.log(saldo);
-                    console.log(TEB);
-                    console.log(saldo*TEB);
-					console.log(this.amortizacion);
+					//totalInt = totalInt + (saldo * TEM);
+                    console.log(cuotaCopia);
+                    console.log(this.intereses);
+                    console.log(TEM*100);
+					console.log(this.seguro_desgrv);
                     //let copia = (saldo * tasa);
-                    //saldo = saldo - (m - (saldo * TEB));
-                    
+                    if(i<=this.plazo_gracia){
+					this.cuotaMensual = ((this.Seguro_desgrav_per/100) * prevSaldo);
+					this.amortizacion=0;
+					}else{
+					this.cuotaMensual = (cuotaCopia*(TEM+(this.Seguro_desgrav_per/100)))/(1-Math.pow((1+(TEM+(this.Seguro_desgrav_per/100))),-60))
+					this.amortizacion = this.cuotaMensual - this.seguro_desgrv- this.intereses;
+					}
+					if(i>this.plazo_gracia){
+						saldo = prevSaldo - this.amortizacion;
+					}
+					this.flujo = (this.cuotaMensual + this.portes + this.gastos_Admin+this.seguro_riesgo )
 					const row = {
 						periodo: i, 
-						saldo: this.periodo==1 ? (saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}): (saldo - this.amortizacion).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
-						intereses: (TEB * saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
-						cuota: this.cuotaMensual.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
-						portes: this.portes,
-						gastos_admin: this.gastos_Admin,
-						seguro_desgrv: (this.Seguro_desgrav_per * saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
-						seguro_riesgo: (this.Seguro_riesgo_per * saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
-						flujo: (this.cuotaMensual + this.portes + this.gastos_Admin+this.Seguro_riesgo_per ).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
-						amortizacion: ((TEB * saldo)+this.cuotaMensual+(this.Seguro_desgrav_per * saldo)).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						saldo: i==0 ? (saldoi).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}): (saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						intereses: i==0 ?0:(this.intereses).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						cuota: i==0 ?0:this.cuotaMensual.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						portes:i==0 ?0: this.portes,
+						gastos_admin:i==0 ?0: this.gastos_Admin,
+						seguro_desgrv:i==0 ?0: (this.seguro_desgrv).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						seguro_riesgo:i==0 ?0: (this.seguro_riesgo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						flujo: i==0 ?saldo.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}):this.flujo.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						amortizacion:this.amortizacion.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 					};
+				
 					this.tabla.push(row);
-                    //saldo = saldo - (m - (saldo * tasa));
+
+					prevSaldo = saldo;
+					this.intereses= (prevSaldo) * (TEM);
+					this.seguro_desgrv=(this.Seguro_desgrav_per/100) * prevSaldo;
+					this.seguro_riesgo = (this.Seguro_riesgo_per/100) * this.importe
+					if(i<=this.plazo_gracia){
+					saldo = prevSaldo + this.intereses;
+					}
+				
 				}
+
 				this.totalIntereses = totalInt;
 			}
 
+			
 
 		},
 

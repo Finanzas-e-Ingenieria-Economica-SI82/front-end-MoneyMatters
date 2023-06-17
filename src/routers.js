@@ -4,7 +4,7 @@ import Login from './components/Login.vue'
 import FrenchMethod from './views/FrenchMethod.vue'
 import Convert_rate from './views/Convert_rate.vue'
 import CardProperty from './views/CardProperty.vue'
-
+import UserProfile from './views/UserProfile.vue'
 import {createRouter, createWebHistory} from "vue-router";
 const routes=[
     {
@@ -40,7 +40,13 @@ const routes=[
         name: "FrenchMethod",
         component: FrenchMethod,
         path: '/french_method'
-    }
+    },
+    
+   {
+    name: 'UserProfile',
+    component: UserProfile,
+    path: '/UserProfile'
+  }
     
 ];
 

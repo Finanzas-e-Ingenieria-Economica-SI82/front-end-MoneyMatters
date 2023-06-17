@@ -13,9 +13,22 @@ export default {
 	getProperties() {
 		return apiClient.get("/properties")
 	},
-
+	getUser(){
+		return apiClient.get("/users")
+	},
+	getUserById(id){
+		return apiClient.get("/id/"+id)
+	},
 	getPropertiesById(id) {
 		return apiClient.get("/properties/"+id)
+	},
+
+	async getUsers() {
+		return apiClient.get("/users?type=${this.type}").then(response =>{
+			return response.data;
+		}).catch(error =>{
+			console.log(error);
+		});
 	},
 
 	async getPropertiesByType() {

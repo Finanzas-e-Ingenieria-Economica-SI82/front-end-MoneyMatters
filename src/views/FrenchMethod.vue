@@ -109,6 +109,9 @@
 					<label for="Seguro_riesgo_per"> % Seguro riesgo: {{Seguro_riesgo_per.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} % </label>
 				</div>
 				<div>
+					<label for="COK_MES"> % dscto. COK(mes): {{ ((Math.pow(1 + (this.COK/100), 1/12) - 1)*100).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} % </label>
+				</div>
+				<div>
 					<label for="Seguro_riesgo_per"> VAN : {{  }} </label>
 				</div>
 
@@ -127,6 +130,7 @@
 				<pv-column field="portes" header="Portes"></pv-column>
 				<pv-column field="gastos_admin" header="Gastos Administrativos"></pv-column>
 				<pv-column field="flujo" header="Flujo"></pv-column>
+				<pv-column field="flujo_actuales" header="Flujos Actuales"></pv-column>
 			</pv-datatable>
 
 			<!-- <div style="font-size: 30px; font-family: 'Josefin Sans', sans-serif; padding-top: 30px;" v-if="totalIntereses !== null">Pago total de intereses: {{ totalIntereses.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 7}) }} $</div> -->
@@ -158,7 +162,8 @@
 			gastos_Admin: 130,
 			seguro_desg: 0.40,
 			seguro_riesgo: 0.30,
-			COK: 35,	
+			COK: 35,
+			COK_MES: 0.0,	
 			TEA: 0.16,
 			TEM: 0.0,
 			monto_prestamo: 0,	
@@ -169,8 +174,7 @@
 			cuotaMensual: null,
 			cuota:0.0,
 			tabla: [],
-			totalIntereses: null,	
-
+			totalIntereses: null,
         }
     },
     methods: {
@@ -180,11 +184,11 @@
 			let saldoi = this.importe-(this.importe*(this.porc_inicial/100)) + this.coste_notarial + this.coste_registro + this.comision;
 			let saldo = this.importe-(this.importe*(this.porc_inicial/100)) + this.coste_notarial + this.coste_registro + this.comision;
 			let year = parseInt(this.year);
+			
 			this.Seguro_desgrav_per = (this.seguro_desg/12);
 			this.Seguro_riesgo_per = (this.seguro_riesgo/12);
 			//this.cuotaMensual = (saldo*(TEM+this.Seguro_desgrav_per))/(1-Math.pow(1+(TEM+this.Seguro_desgrav_per), (-72)));
 				//this.cuotaMensual = m;
-			
 				this.tabla = [];
 				let totalInt = 0;
 				let prevSaldo = saldoi;
@@ -210,7 +214,10 @@
 					if(i>this.plazo_gracia){
 						saldo = prevSaldo - this.amortizacion;
 					}
-					this.flujo = (this.cuotaMensual + this.portes + this.gastos_Admin+this.seguro_riesgo )
+					this.flujo = (this.cuotaMensual + this.portes + this.gastos_Admin+this.seguro_riesgo );
+					this.flujo_actuales = (this.flujo/(Math.pow(1 + this.COK_MES, i)));
+					console.log(this.flujo_actuales);
+					//let TEM = (Math.pow(1 + this.TEA, 1/12) - 1) ;
 					const row = {
 						periodo: i, 
 						saldo: i==0 ? (saldoi).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}): (saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
@@ -221,6 +228,7 @@
 						seguro_desgrv:i==0 ?0: (this.seguro_desgrv).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 						seguro_riesgo:i==0 ?0: (this.seguro_riesgo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 						flujo: i==0 ?saldo.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}):this.flujo.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						flujo_actuales :i==0 ?0: (this.flujo_actuales).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 						amortizacion:this.amortizacion.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 					};
 				

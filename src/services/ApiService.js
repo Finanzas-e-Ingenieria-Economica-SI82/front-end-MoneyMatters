@@ -13,28 +13,63 @@ export default {
 	getProperties() {
 		return apiClient.get("/properties")
 	},
-	getUser(){
-		return apiClient.get("/users")
+	getUser() {
+		const currentUserJSON = localStorage.getItem('user-info');
+		if (currentUserJSON !== null) {
+			const currentUser = JSON.parse(currentUserJSON);
+			return apiClient.get("/users")
+				.then((response) => {
+					const users = response.data;
+					if (currentUser[0]) {
+						const currentUserData = users.find(user => user.id === currentUser[0].id);
+						return currentUserData;
+
+					} else {
+						return null;
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					return null;
+				});
+		} else {
+			console.log("User info not found in local storage.");
+		}
+
 	},
-	getUserById(id){
-		return apiClient.get("/id/"+id)
+
+	updateUser(user) {
+		return apiClient.put("/users/" + user.id, user)
+			.then(response => {
+				console.log(response);
+				return response;
+			})
+			.catch(error => {
+				console.error(error);
+				throw error;
+			});
 	},
+
+	getUserById(id) {
+		return apiClient.get("/id/" + id)
+	},
+
 	getPropertiesById(id) {
-		return apiClient.get("/properties/"+id)
+		return apiClient.get("/properties/" + id)
 	},
 
 	async getUsers() {
-		return apiClient.get("/users?type=${this.type}").then(response =>{
+		return apiClient.get("/users?type=${this.type}").then(response => {
 			return response.data;
-		}).catch(error =>{
+		}).catch(error => {
 			console.log(error);
 		});
 	},
 
 	async getPropertiesByType() {
-		return apiClient.get("/properties?type=${this.type}").then(response =>{
+		return apiClient.get("/properties?type=${this.type}").then(response => {
 			return response.data;
-		}).catch(error =>{
+		}).catch(error => {
 			console.log(error);
 		});
 	},

@@ -1,98 +1,104 @@
 <template>
-    <div>
-      <app-bar></app-bar>
-  
-      <v-container class="user-info">
-        <v-row class="grid">
-          <v-col>
-            <div class="col2 md:col-6 lg:col-3" style="padding: 40px; height: 100vh; width: 170vh;">
-              <div class="register" flex flex-wrap justify-content-center gap-2>
-                <input type="name" v-model="name" :placeholder="users.name" :readonly="!editable" />
-                <img class="input-icon" src="" alt="Icon" />
-                <input type="lastname" v-model="lastname" :placeholder="users.lastname" :readonly="!editable" />
-                <input type="username" v-model="username" :placeholder="users.username" :readonly="!editable" />
-                <input type="password" v-model="password" :placeholder="users.password" :readonly="!editable" />
-                <input type="dni" v-model="dni" :placeholder="users.dni" :readonly="!editable" />
-                <input type="phone" v-model="phone" :key="users.id" :placeholder="users.phone" :readonly="!editable" />
-                <label>{{ users.lastname }}</label>
-                <label>ssssss</label>
-                <pv-button rounded style="margin-up: 0px; background: #46A2AE; border-style: none; width: 30%; justify-content: center; font-weight: bold;" v-on:click="toggleEditable">
-                  <span v-if="!updating" class="material-symbols-outlined">edit</span>
-                  <span v-else class="material-symbols-outlined">update</span>
-                </pv-button>
-                <p v-if="error" class="error">{{ error }}</p>
-              </div>
+  <div>
+    <app-bar></app-bar>
+
+    <v-container class="user-info">
+      <v-row class="grid">
+        <v-col>
+          <div class="col2 md:col-6 lg:col-3" style="padding: 40px; height: 100vh; width: 170vh;">
+            <div class="register" flex flex-wrap justify-content-center gap-2>
+              <input type="text" v-model="name" :placeholder="users.name" :readonly="!editable" />
+              <input type="text" v-model="lastname" :placeholder="users.lastname" :readonly="!editable" />
+              <input type="text" v-model="username" :placeholder="users.username" :readonly="!editable" />
+              <input type="password" v-model="password" :placeholder="users.password" :readonly="!editable" />
+              <input type="text" v-model="dni" :placeholder="users.dni" :readonly="!editable" />
+              <input type="text" v-model="phone" :placeholder="users.phone" :readonly="!editable" />
+              <pv-button rounded style="margin-top: 0px; background: #46A2AE; border-style: none; width: 30%; justify-content: center; font-weight: bold;" v-on:click="toggleEditable">
+                <span v-if="!updating" class="material-symbols-outlined">edit</span>
+                <span v-else class="material-symbols-outlined">update</span>
+              </pv-button>
+              <p v-if="error" class="error">{{ error }}</p>
             </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  import AppBar from '../components/AppBar.vue';
-  import ApiService from '@/services/ApiService';
-  export default {
-    components: {
-      AppBar
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
+</template>
+
+
+<script>
+//import axios from 'axios';
+import AppBar from '../components/AppBar.vue';
+import ApiService from '@/services/ApiService';
+
+export default {
+  components: {
+    AppBar
+  },
+  data() {
+    return {
+      users: {},
+      editable: false,
+      updating: false,
+      error: ''
+    };
+  },
+  mounted() {
+    this.getUserInfo();
+  },
+  methods: {
+    toggleEditable() {
+      this.editable = !this.editable;
+      this.updating = !this.editable;
     },
-    data() {
-      return {
-        users: [],
-        editable: false,
-        updating: false,
-        error: ''
-      };
-    },
-    mounted() {
-      this.getUserInfo();
-    },
-    methods: {
-      toggleEditable() {
-        this.editable = !this.editable;
-        this.updating = !this.editable;
-      },
-      getuserapi(){
-        ApiService.getUser().then((response)=>{
-            this.users=response.data;
-            console.log("users:",this.users);
-        }).catch((error)=>{
-            console.log(error);
-        })
-    },
-      getUserInfo() {
-  const userInfo = JSON.parse(localStorage.getItem('user-info'));
-  if (userInfo) {
-    this.users = userInfo;
-    this.name = userInfo.name || '';
-    this.lastname = userInfo.lastname || '';
-    this.username = userInfo.username || '';
-    this.password = userInfo.password || '';
-    this.dni = userInfo.dni || '';
-    this.phone = userInfo.phone || '';
-  }
-},
-      updateUserInfo() {
-        axios.patch(`http://localhost:3000/users/${this.users.id}`, {
-          name: this.name,
-          lastname: this.lastname,
-          username: this.username,
-          password: this.password,
-          dni: this.dni,
-          phone: this.phone
-        })
-          .then(() => {
-            this.editable = false;
-            this.updating = false;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+    getUserInfo() {
+      ApiService.getUser()
+    .then((currentUserData) => {
+      if (currentUserData) {
+        this.users = currentUserData;
+        this.name = currentUserData.name || '';
+        this.lastname = currentUserData.lastname || '';
+        this.username = currentUserData.username || '';
+        this.password = currentUserData.password || '';
+        this.dni = currentUserData.dni || '';
+        this.phone = currentUserData.phone || '';
+        console.log(this.users);
+      } else {
+        console.log('No hay datos de usuario');
       }
-    }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    console.log(this.users);
+    },
+
+    updateUserInfo() {
+  const user = {
+    id: this.users.id,
+    name: this.name,
+    lastname: this.lastname,
+    username: this.username,
+    password: this.password,
+    dni: this.dni,
+    phone: this.phone
+  };
+
+  ApiService.updateUser(user)
+    .then(() => {
+      this.editable = false;
+      this.updating = false;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
   }
-  </script>
+};
+</script>
+
   
   <style>
   /* Estilos para la sección de perfil del usuario */
@@ -116,6 +122,7 @@
     display: flex;
     max-width: 100vh;
     max-height: 100vh;
+    color: #494949;
   }
   
   .grid input {
@@ -154,4 +161,5 @@
     width: 400px; 
     border-radius: 20%;
   }
+
   </style>

@@ -1,13 +1,22 @@
 {
   "users": [
     {
+      "id": 1,
       "username": "Admin1",
       "password": "admin1",
-      "name": "Admin",
-      "lastname": "Admin",
-      "dni": "111111111",
-      "phone": "999999999",
-      "id": 1
+      "name": "María",
+      "lastname": "Pérez",
+      "dni": "56980456",
+      "phone": "965236489"
+    },
+    {
+      "id": 2,
+      "username": "jasmin",
+      "password": "jas123",
+      "name": "Jasmin",
+      "lastname": "Pomasoncco",
+      "dni": "45896235",
+      "phone": "935684785"
     }
   ],
   "properties": [

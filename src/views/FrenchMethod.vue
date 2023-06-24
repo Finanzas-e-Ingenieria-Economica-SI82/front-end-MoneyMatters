@@ -112,7 +112,10 @@
 					<label for="COK_MES"> % dscto. COK(mes): {{ ((Math.pow(1 + (this.COK/100), 1/12) - 1)*100).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} % </label>
 				</div>
 				<div>
-					<label for="suma_flujo_actuales"> VAN : {{ totalSUMA.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} </label>
+					<label for="VAN"> VAN : {{ VAN.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} </label>
+				</div>
+				<div>
+					<label for="TIR"> TIR : {{ TIR.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} </label>
 				</div>
 				<!-- <div>Cuota a pagar mensualmente: {{ cuotaMensual.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div>
 				<div>Capital Inicial: {{ importe.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div> -->
@@ -142,6 +145,7 @@
 <script>
 	import AppBar from '../components/AppBar.vue';
 	import { utils, writeFile } from 'xlsx';
+	//const { irr } = require('financial');
 	//import ApiService from '@/services/ApiService';
     export default{
     name: 'FrenchMethod',
@@ -172,10 +176,13 @@
 			Seguro_riesgo_per: 0.0,
 			suma_flujo_actuales: 0,
 			totalSUMA: 0,
+			VAN: 0,
+			TIR: 0,
 			cuotaMensual: null,
 			cuota:0.0,
 			tabla: [],
 			totalIntereses: null,
+			//flujo: [],
         }
     },
     methods: {
@@ -192,7 +199,6 @@
 				//this.cuotaMensual = m;
 				this.tabla = [];
 				let totalInt = 0;
-				let totalSUMA = 0;
 				let suma_flujo_actuales = 0;
 				let prevSaldo = saldoi;
 				for (let i = 0; i <= year * 12; i++) {
@@ -202,6 +208,7 @@
 					//var valorCuota = 
 
 					//totalInt = totalInt + (saldo * TEM);
+					console.log(saldoi);
 					console.log(COK_MES)
                     console.log(cuotaCopia);
                     console.log(this.intereses);
@@ -229,8 +236,20 @@
 						suma_flujo_actuales += this.flujo_actuales;
 						console.log(suma_flujo_actuales);
 					}
-					totalSUMA = suma_flujo_actuales;
-					console.log(totalSUMA);
+					this.totalSUMA = suma_flujo_actuales;
+					console.log(this.totalSUMA);
+
+					this.VAN = (this.totalSUMA + saldoi);
+					console.log(this.VAN);
+
+					let flujosDeEfectivo = this.flujo;
+					console.log(flujosDeEfectivo);
+
+					let tir = this.calcularTIR(flujosDeEfectivo);
+					console.log(tir);
+					console.log('La TIR es:', tir.toFixed(2) + '%');
+					this.TIR = tir;
+					console.log(this.TIR);
 					//let TEM = (Math.pow(1 + this.TEA, 1/12) - 1) ;
 					const row = {
 						periodo: i, 
@@ -255,7 +274,6 @@
 					if(i<=this.plazo_gracia){
 					saldo = prevSaldo + this.intereses;
 					}
-				
 				}
 
 				this.totalIntereses = totalInt;
@@ -264,6 +282,27 @@
 				const workbook = utils.table_to_book(document.getElementById('resultado'));
 				const fileName = 'Método Francés.xlsx';
 				writeFile(workbook, fileName);
+			},
+
+			calcularTIR(flujosDeEfectivo) {
+				const maxIterations = 100;
+				const tolerance = 0.0001;
+				let guess = 0.1; // Estimación inicial de la TIR
+				
+				for (let i = 0; i < maxIterations; i++) {
+					let npv = 0;
+					
+					for (let j = 0; j < flujosDeEfectivo.length; j++) {
+					npv += flujosDeEfectivo[j] / Math.pow(1 + guess, j);
+					}
+					
+					if (Math.abs(npv) < tolerance) {
+					return guess;
+					}
+					
+					guess += (npv > 0) ? 0.0001 : -0.0001;
+				}
+				return null; // TIR no encontrada dentro del límite de iteraciones
 			},
 		},
     }

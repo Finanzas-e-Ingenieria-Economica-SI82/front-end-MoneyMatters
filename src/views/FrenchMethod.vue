@@ -7,7 +7,7 @@
 		<!-- <div class="p-field">
 			<label for="importe">Valor de la Propiedad :  s/.{{ property.price }}  </label>
 		</div> -->
-
+		<p style="font-weight: bold;">... del préstamo</p>
 		<div class="p-field">
 			<label for="importe">Valor de la propiedad (S/.):</label>
             <input class="form-control" v-model="importe" :min="0" :max="100">
@@ -42,6 +42,7 @@
 			<label style="font-weight: bold;">(meses)</label>
 		</div>
 
+		<p style="font-weight: bold;">... de los costes/gastos iniciales</p>
 		<div class="p-field">
 			<label for="coste_notarial">Coste notarial:</label>
             <input class="form-control" v-model="coste_notarial" :min="1" :max="1000">
@@ -56,7 +57,8 @@
 			<label for="comision">Comisión de estudio:</label>
             <input class="form-control" v-model="comision" :min="1" :max="1000">
 		</div>
-
+		
+		<p style="font-weight: bold;">... de los costes/gastos periodicos</p>
 		<div class="p-field">
 			<label for="portes">Portes:</label>
             <input class="form-control" v-model="portes" :min="1" :max="1000">
@@ -79,6 +81,7 @@
 			<label style="font-weight: bold;">(Anual)</label>
 		</div>
 
+		<p style="font-weight: bold;">... del costo de oportunidad</p>
 		<div class="p-field">
 			<label for="COK"> % dscto. COK:</label>
             <input class="form-control" v-model="COK" :min="1" :max="50" suffix="%">
@@ -88,6 +91,7 @@
 		
 		<div>
 			<pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" label="Calcular" @click="calcular"></pv-button>
+			<pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold; margin-left: 15px; " label="Descargar" @click="descargarExcel"></pv-button>
 		</div>
 		<br>
 		<div id="resultado">
@@ -105,13 +109,18 @@
 					<label for="Seguro_riesgo_per"> % Seguro riesgo: {{Seguro_riesgo_per.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} % </label>
 				</div>
 				<div>
-					<label for="Seguro_riesgo_per"> VAN : {{  }} </label>
+					<label for="COK_MES"> % dscto. COK(mes): {{ ((Math.pow(1 + (this.COK/100), 1/12) - 1)*100).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} % </label>
 				</div>
-
+				<div>
+					<label for="VAN"> VAN : {{ VAN.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} </label>
+				</div>
+				<div>
+					<label for="TIR"> TIR : {{ TIR.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} </label>
+				</div>
 				<!-- <div>Cuota a pagar mensualmente: {{ cuotaMensual.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div>
 				<div>Capital Inicial: {{ importe.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div> -->
 			</div>
-<br> 
+			<br> 
 			<pv-datatable v-if="tabla.length > 0" :value="tabla" :rows="tabla.length">
 				<pv-column field="periodo" header="Periodo"></pv-column>
 				<pv-column field="saldo" header="Saldo"></pv-column>
@@ -123,6 +132,7 @@
 				<pv-column field="portes" header="Portes"></pv-column>
 				<pv-column field="gastos_admin" header="Gastos Administrativos"></pv-column>
 				<pv-column field="flujo" header="Flujo"></pv-column>
+				<pv-column field="flujo_actuales" header="Flujos Actuales"></pv-column>
 			</pv-datatable>
 
 			<!-- <div style="font-size: 30px; font-family: 'Josefin Sans', sans-serif; padding-top: 30px;" v-if="totalIntereses !== null">Pago total de intereses: {{ totalIntereses.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 7}) }} $</div> -->
@@ -133,8 +143,10 @@
 </template>
 
 <script>
-import AppBar from '../components/AppBar.vue';
-	import ApiService from '@/services/ApiService';
+	import AppBar from '../components/AppBar.vue';
+	import { utils, writeFile } from 'xlsx';
+	//const { irr } = require('financial');
+	//import ApiService from '@/services/ApiService';
     export default{
     name: 'FrenchMethod',
     components: { AppBar },
@@ -153,7 +165,8 @@ import AppBar from '../components/AppBar.vue';
 			gastos_Admin: 130,
 			seguro_desg: 0.40,
 			seguro_riesgo: 0.30,
-			COK: 35,	
+			COK: 35,
+			COK_MES: 0.0,	
 			TEA: 0.16,
 			TEM: 0.0,
 			monto_prestamo: 0,	
@@ -161,11 +174,15 @@ import AppBar from '../components/AppBar.vue';
 			numero_cuotas_total: 0,
 			Seguro_desgrav_per: 0.0,
 			Seguro_riesgo_per: 0.0,
+			suma_flujo_actuales: 0,
+			totalSUMA: 0,
+			VAN: 0,
+			TIR: 0,
 			cuotaMensual: null,
 			cuota:0.0,
 			tabla: [],
-			totalIntereses: null,	
-
+			totalIntereses: null,
+			//flujo: [],
         }
     },
     methods: {
@@ -175,13 +192,14 @@ import AppBar from '../components/AppBar.vue';
 			let saldoi = this.importe-(this.importe*(this.porc_inicial/100)) + this.coste_notarial + this.coste_registro + this.comision;
 			let saldo = this.importe-(this.importe*(this.porc_inicial/100)) + this.coste_notarial + this.coste_registro + this.comision;
 			let year = parseInt(this.year);
+			let COK_MES = (Math.pow(1 + (this.COK/100), 1/12) - 1);
 			this.Seguro_desgrav_per = (this.seguro_desg/12);
 			this.Seguro_riesgo_per = (this.seguro_riesgo/12);
 			//this.cuotaMensual = (saldo*(TEM+this.Seguro_desgrav_per))/(1-Math.pow(1+(TEM+this.Seguro_desgrav_per), (-72)));
 				//this.cuotaMensual = m;
-			
 				this.tabla = [];
 				let totalInt = 0;
+				let suma_flujo_actuales = 0;
 				let prevSaldo = saldoi;
 				for (let i = 0; i <= year * 12; i++) {
 					if(i==this.plazo_gracia){
@@ -190,10 +208,13 @@ import AppBar from '../components/AppBar.vue';
 					//var valorCuota = 
 
 					//totalInt = totalInt + (saldo * TEM);
+					console.log(saldoi);
+					console.log(COK_MES)
                     console.log(cuotaCopia);
                     console.log(this.intereses);
                     console.log(TEM*100);
 					console.log(this.seguro_desgrv);
+					
                     //let copia = (saldo * tasa);
                     if(i<=this.plazo_gracia){
 					this.cuotaMensual = ((this.Seguro_desgrav_per/100) * prevSaldo);
@@ -205,7 +226,31 @@ import AppBar from '../components/AppBar.vue';
 					if(i>this.plazo_gracia){
 						saldo = prevSaldo - this.amortizacion;
 					}
-					this.flujo = (this.cuotaMensual + this.portes + this.gastos_Admin+this.seguro_riesgo )
+					this.flujo = -(this.cuotaMensual + this.portes + this.gastos_Admin+this.seguro_riesgo );
+					console.log(this.flujo);
+					
+					this.flujo_actuales = (this.flujo/(Math.pow(1 + COK_MES, i)));
+					console.log(this.flujo_actuales);
+
+					if (this.flujo_actuales !== 0 && i >= 1) {
+						suma_flujo_actuales += this.flujo_actuales;
+						console.log(suma_flujo_actuales);
+					}
+					this.totalSUMA = suma_flujo_actuales;
+					console.log(this.totalSUMA);
+
+					this.VAN = (this.totalSUMA + saldoi);
+					console.log(this.VAN);
+
+					let flujosDeEfectivo = this.flujo;
+					console.log(flujosDeEfectivo);
+
+					let tir = this.calcularTIR(flujosDeEfectivo);
+					console.log(tir);
+					console.log('La TIR es:', tir.toFixed(2) + '%');
+					this.TIR = tir;
+					console.log(this.TIR);
+					//let TEM = (Math.pow(1 + this.TEA, 1/12) - 1) ;
 					const row = {
 						periodo: i, 
 						saldo: i==0 ? (saldoi).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}): (saldo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
@@ -216,38 +261,50 @@ import AppBar from '../components/AppBar.vue';
 						seguro_desgrv:i==0 ?0: (this.seguro_desgrv).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 						seguro_riesgo:i==0 ?0: (this.seguro_riesgo).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 						flujo: i==0 ?saldo.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}):this.flujo.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
+						flujo_actuales :i==0 ?0: (this.flujo_actuales).toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 						amortizacion:this.amortizacion.toLocaleString("es-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}),
 					};
-				
+					
 					this.tabla.push(row);
 
 					prevSaldo = saldo;
 					this.intereses= (prevSaldo) * (TEM);
 					this.seguro_desgrv=(this.Seguro_desgrav_per/100) * prevSaldo;
-					this.seguro_riesgo = (this.Seguro_riesgo_per/100) * this.importe
+					this.seguro_riesgo = (this.Seguro_riesgo_per/100) * this.importe;
 					if(i<=this.plazo_gracia){
 					saldo = prevSaldo + this.intereses;
 					}
-				
 				}
 
 				this.totalIntereses = totalInt;
-			}
+			},
+			descargarExcel() {
+				const workbook = utils.table_to_book(document.getElementById('resultado'));
+				const fileName = 'Método Francés.xlsx';
+				writeFile(workbook, fileName);
+			},
 
-			
-
+			calcularTIR(flujosDeEfectivo) {
+				const maxIterations = 100;
+				const tolerance = 0.0001;
+				let guess = 0.1; // Estimación inicial de la TIR
+				
+				for (let i = 0; i < maxIterations; i++) {
+					let npv = 0;
+					
+					for (let j = 0; j < flujosDeEfectivo.length; j++) {
+					npv += flujosDeEfectivo[j] / Math.pow(1 + guess, j);
+					}
+					
+					if (Math.abs(npv) < tolerance) {
+					return guess;
+					}
+					
+					guess += (npv > 0) ? 0.0001 : -0.0001;
+				}
+				return null; // TIR no encontrada dentro del límite de iteraciones
+			},
 		},
-
-		created() {
-		ApiService.getPropertiesById(this.property).then((response) => {
-        this.property = response.data;
-				console.log("property:", this.property);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}
-	
     }
 	
 </script>

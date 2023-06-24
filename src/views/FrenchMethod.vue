@@ -11,6 +11,10 @@
 		<div class="p-field">
 			<label for="importe">Valor de la propiedad (S/.):</label>
             <input class="form-control" v-model="importe" :min="0" :max="100">
+			<select class="input-gropup-text" style="width: 50px; height: 25px; border-radius: 5px;">
+				<option selected value="0">S/</option>
+				<option value="1">$</option>
+			</select>
 		</div>
 
 		<div class="p-field">

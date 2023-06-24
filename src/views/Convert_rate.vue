@@ -31,7 +31,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option selected>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
             <div class="form-group col-md-6">
@@ -51,7 +50,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
             <div class="form-group col-md-5">
@@ -65,7 +63,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
 
@@ -82,7 +79,6 @@
               <option>Cuatrimestral</option>
               <option>Semestral</option>
               <option selected>Anual</option>
-              <option>Especial</option>
             </select>
           </div>
         </div>
@@ -107,7 +103,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option selected>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
           </div>
@@ -127,7 +122,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
           </div>
@@ -143,7 +137,6 @@
               <option>Cuatrimestral</option>
               <option>Semestral</option>
               <option selected>Anual</option>
-              <option>Especial</option>
             </select>
           </div>
         </div>
@@ -161,7 +154,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option selected>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
             <div class="form-group col-md-6">
@@ -181,7 +173,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option selected>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
           </div>
@@ -200,7 +191,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option selected>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
             <div class="form-group col-md-6">
@@ -220,7 +210,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
             <div class="form-group col-md-6">
@@ -235,7 +224,6 @@
                 <option>Cuatrimestral</option>
                 <option>Semestral</option>
                 <option selected>Anual</option>
-                <option>Especial</option>
               </select>
             </div>
           </div>

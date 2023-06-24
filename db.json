@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "María",
-      "lastname": "Hurtado",
+      "lastname": "Li Tang",
       "username": "Admin1",
       "password": "admin1",
       "dni": "56980456",
@@ -22,7 +22,7 @@
   "properties": [
     {
       "id": 1,
-      "name": "Departamento Moderna",
+      "name": "Departamento Moderno",
       "dimension": "100,00",
       "numero": "104",
       "type": "Departamento",
@@ -48,6 +48,32 @@
     },
     {
       "id": 3,
+      "name": "Casa Moderna",
+      "dimension": "200,00",
+      "numero": "407",
+      "type": "Casa",
+      "numDormitorios": "3",
+      "price": "800,000",
+      "cochera": "1 carros",
+      "sala": "Sala enorme",
+      "cocina": "Cocina grande",
+      "imageUrl": "https://www.construyehogar.com/wp-content/uploads/2016/01/Casa-moderna-un-piso.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Casa Moderna",
+      "dimension": "200,00",
+      "numero": "407",
+      "type": "Casa",
+      "numDormitorios": "3",
+      "price": "800,000",
+      "cochera": "1 carros",
+      "sala": "Sala enorme",
+      "cocina": "Cocina grande",
+      "imageUrl": "https://www.construyehogar.com/wp-content/uploads/2016/01/Casa-moderna-un-piso.jpg"
+    },
+    {
+      "id": 5,
       "name": "Casa Moderna",
       "dimension": "200,00",
       "numero": "407",

@@ -9,7 +9,7 @@
   </form>
   <pv-toast/>
 </div>
-<div class="card-list md:col-6 lg:col-3" style="padding: 40px; margin-top: 40px; margin: 10px;">
+<div class="card-list md:col-4 lg:col-3" style="padding: 40px; margin-top: 40px; margin: 10px;">
 <card-property v-for="property in properties" :key="property.id" :property="property" @see-more="showPopup(property)"/>
 </div>
 <popup v-if="showPopupFlag" :property="selectedProperty" @close-popup="closePopup" />
@@ -39,8 +39,11 @@ import Popup from './Popup.vue';
         return{
           properties:[],
           errorMessage: '',
-          selectType,
-          types,
+          selectType: ref(), // Mover la declaración aquí
+    types: ref([
+      { type: 'Casa' },
+      { type: 'Departamento' }
+    ]),
           showPopupFlag: false,
           selectedProperty: null,
     }
@@ -70,15 +73,6 @@ import Popup from './Popup.vue';
 			});
 	},
     }
-const selectType = ref();
-const types = ref([
-  {  
-    type: 'Casa', 
-  },
-  {
-    type: 'Departamento'
-  }
-]);
 </script>
 
 <style>
@@ -88,4 +82,10 @@ const types = ref([
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
   }
+  .card-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
 </style>

@@ -2,10 +2,10 @@
   "users": [
     {
       "id": 1,
+      "name": "María",
+      "lastname": "Hurtado",
       "username": "Admin1",
       "password": "admin1",
-      "name": "María",
-      "lastname": "Pérez",
       "dni": "56980456",
       "phone": "965236489"
     },
@@ -28,7 +28,7 @@
       "type": "Departamento",
       "numDormitorios": "4",
       "price": "600,000",
-      "cochera":"3 carros",
+      "cochera": "3 carros",
       "sala": "Sala pequeña",
       "cocina": "Cocina mediana",
       "imageUrl": "https://decoraideas.com/wp-content/uploads/2019/08/04-4-768x536.jpg"
@@ -41,7 +41,7 @@
       "type": "Casa",
       "numDormitorios": "4",
       "price": "500,000",
-      "cochera":"1 carros",
+      "cochera": "1 carros",
       "sala": "Sala grande",
       "cocina": "Cocina pequeña",
       "imageUrl": "https://static.wixstatic.com/media/63b041_e98452ee67e3450eb6936162bd357726~mv2_d_8333_5729_s_4_2.jpg/v1/fill/w_1000,h_688,al_c,q_85,usm_0.66_1.00_0.01/63b041_e98452ee67e3450eb6936162bd357726~mv2_d_8333_5729_s_4_2.jpg"
@@ -54,10 +54,9 @@
       "type": "Casa",
       "numDormitorios": "3",
       "price": "800,000",
-      "cochera":"1 carros",
+      "cochera": "1 carros",
       "sala": "Sala enorme",
       "cocina": "Cocina grande",
-
       "imageUrl": "https://www.construyehogar.com/wp-content/uploads/2016/01/Casa-moderna-un-piso.jpg"
     }
   ],

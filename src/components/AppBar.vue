@@ -40,7 +40,18 @@
             <a>
               <div class="item">
                 <p>
-                  Setting
+                  Tasas
+                </p>
+              </div>
+            </a>
+          </li>
+        </router-link>
+        <router-link to="/convert_rate">
+          <li>
+            <a>
+              <div class="item">
+                <p>
+                  Cambio
                 </p>
               </div>
             </a>
@@ -52,14 +63,23 @@
         <router-link to="/UserProfile">
           <li>
             <a>
-                <p><span class="material-symbols-outlined">person</span></p>
+              <div class="item">
+                <p>
+                  <span class="material-symbols-outlined">person</span>
+                </p>
+              </div>
             </a>
           </li>
         </router-link>
         <router-link to="/sign-up">
           <li>
-            <p><span class="material-symbols-outlined">logout</span>
+            <a>
+              <div class="item">
+                <p>
+              <span class="material-symbols-outlined">logout</span>
             </p>
+              </div>
+            </a>
           </li>
         </router-link>
     </div>
@@ -241,8 +261,14 @@ export default {
     font-size: 12px;
     text-align: center;
   }
-
-
+@media screen {
+  
+}
+.person-icon:hover,
+.dropdown-link:hover {
+  background: #46A2AE;
+  color: #ffffff;
+}
 
  
 

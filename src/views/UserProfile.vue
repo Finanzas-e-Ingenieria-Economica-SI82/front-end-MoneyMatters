@@ -7,6 +7,7 @@
         <v-col>
           <div class="col2 md:col-6 lg:col-3" style="padding: 40px; height: 100vh; width: 170vh;">
             <div class="register" flex flex-wrap justify-content-center gap-2>
+              <img class="input-icon" src='../assets/mivivienda.png' alt="Icono de usuario" />
               <input type="text" v-model="name" :placeholder="users.name" :readonly="!editable" />
               <input type="text" v-model="lastname" :placeholder="users.lastname" :readonly="!editable" />
               <input type="text" v-model="username" :placeholder="users.username" :readonly="!editable" />
@@ -49,9 +50,12 @@ export default {
   },
   methods: {
     toggleEditable() {
-      this.editable = !this.editable;
-      this.updating = !this.editable;
-    },
+  if (this.editable) {
+    this.updateUserInfo(); // Invocar el método para actualizar los datos del usuario
+  }
+  this.editable = !this.editable;
+  this.updating = false;
+},
     getUserInfo() {
       ApiService.getUser()
     .then((currentUserData) => {

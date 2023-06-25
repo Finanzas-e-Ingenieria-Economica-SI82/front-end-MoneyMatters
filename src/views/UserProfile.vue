@@ -5,7 +5,7 @@
     <v-container class="user-info">
       <v-row class="grid">
         <v-col>
-          <div class="col2 md:col-6 lg:col-3" style="padding: 40px; height: 100vh; width: 170vh;">
+          <div class="col2 md:col-6 lg:col-3" style="padding: 55px; width: 150vh;">
             <div class="register" flex flex-wrap justify-content-center gap-2>
               <img class="input-icon" src='../assets/mivivienda.png' alt="Icono de usuario" />
               <input type="text" v-model="name" :placeholder="users.name" :readonly="!editable" />
@@ -159,11 +159,8 @@ export default {
   
   .input-icon {
     position: absolute; 
-    top: 64%;
-    right: 200px;
-    transform: translateY(-50%);
-    width: 400px; 
-    border-radius: 20%;
+    padding-top: 10%;
+    padding-left: 100px;
   }
 
   </style>

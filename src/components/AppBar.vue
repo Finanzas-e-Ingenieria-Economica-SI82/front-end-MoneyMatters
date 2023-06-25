@@ -46,17 +46,6 @@
             </a>
           </li>
         </router-link>
-        <router-link to="/convert_rate">
-          <li>
-            <a>
-              <div class="item">
-                <p>
-                  Cambio
-                </p>
-              </div>
-            </a>
-          </li>
-        </router-link>
         <div class="person-icon" @click="toggleDropdown">
           <span class="material-symbols-outlined">settings</span>
       <div class="dropdown" v-if="showDropdown">

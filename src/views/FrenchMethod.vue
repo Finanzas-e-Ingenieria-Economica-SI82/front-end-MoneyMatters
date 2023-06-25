@@ -1,18 +1,13 @@
 <template>
 	<app-bar></app-bar>
-	<div class="FrenchMethod" id="app">
-		<!-- <div v-for="property in properties" :key="property.id" :property="property" @goToCredit="showCredit(property)"> -->
 
-		<h1 class="header">Crédito</h1>
-		<!-- <div class="p-field">
-			<label for="importe">Valor de la Propiedad :  s/.{{ property.price }}  </label>
-		</div> -->
+	<div class="FrenchMethod" id="app">
 		<p style="font-weight: bold;">... del préstamo</p>
 		<div class="p-field">
-			<label for="importe">Valor de la propiedad (S/.):</label>
-			<input class="form-control" v-model="importe" :min="0" :max="100">
+			<label for="importe">Valor de la propiedad (S/.): </label>
+			<input class="form-control" v-model="property.price" :min="0" :max="100">
 			<select class="input-gropup-text" style="width: 50px; height: 25px; border-radius: 5px;">
-				<option selected value="0">S/</option>
+				<option id="covertirsoles"  selected value="0">S/</option>
 				<option value="1">$</option>
 			</select>
 		</div>
@@ -50,7 +45,7 @@
 			<input class="form-control" v-model="plazo_gracia" :min="1" :max="50">
 			<label style="font-weight: bold;">(meses) &nbsp; </label>
 
-			<select id="plazo_gracia_select" class="input-gropup-text"
+			<select id="plazo_gracia_select" class="input-gropup-text" @change="cambio()" 
 				style="width: 100px; height: 25px; border-radius: 5px;">
 				<option selected value="0">TOTAL</option>
 				<option value="1">PARCIAL</option>
@@ -154,6 +149,7 @@
 				<!-- <div>Cuota a pagar mensualmente: {{ cuotaMensual.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div>
 				<div>Capital Inicial: {{ importe.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div> -->
 			</div>
+
 			<br>
 			<pv-datatable v-if="tabla.length > 0" :value="tabla" :rows="tabla.length">
 				<pv-column field="periodo" header="Periodo"></pv-column>
@@ -172,7 +168,6 @@
 			<!-- <div style="font-size: 30px; font-family: 'Josefin Sans', sans-serif; padding-top: 30px;" v-if="totalIntereses !== null">Pago total de intereses: {{ totalIntereses.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 7}) }} $</div> -->
 		</div>
 	</div>
-	<!-- </div> -->
 </template>
 
 <script>
@@ -180,15 +175,16 @@ import AppBar from '../components/AppBar.vue';
 import { utils, writeFile } from 'xlsx';
 import { irr } from 'financial'
 //const { irr } = require('financial');
-//import ApiService from '@/services/ApiService';
+import ApiService from '@/services/ApiService';
 
 export default {
 	name: 'FrenchMethod',
 	components: { AppBar },
+	props: ['propertyId'],
 	data() {
 		return {
-			propertie: null,
-			importe: 200000,
+			property: {},
+			importe: 0,
 			porc_inicial: 12,
 			year: 6,
 			frecuencia_pago: 1,
@@ -218,46 +214,66 @@ export default {
 			tabla: [],
 			totalIntereses: null,
 			tipoPlazoGracia: null,
-			//flujo: [],
+			tipoMoneda :null,
 		}
+	},
+
+	created() {
+		const propertyId = this.$route.query.propertyId;
+		console.log('Property ID:', propertyId); // Verificar el valor de propertyId en la consola
+
+		ApiService.getPropertiesById(propertyId)
+			.then(response => {
+				this.property = response.data; // Almacenar los datos del inmueble en la propiedad 'property'
+			})
+			.catch(error => {
+				console.error('Error al cargar los datos del inmueble:', error);
+			});
 	},
 	methods: {
 
 		reiniciarValores() {
-			// this.importe = '';
-			// this.porc_inicial = '';
-			// this.year = '';
-			// this.frecuencia_pago = '';
-			// this.plazo_gracia = '';
-			// this.coste_notarial = '';
-			// this.coste_registro = '';
-			// this.comision = '';
-			// this.portes = '';
-			// this.gastos_Admin = '';
-			// this.seguro_desg = '';
-			// this.seguro_riesgo = '';
-			// this.COK = '';
-			// this.COK_MES = '';
-			// this.TEA = '';
-			// this.TEM = '';
-			// this.monto_prestamo = '';
-			// this.cuotas_x_año = '';
-			// this.numero_cuotas_total = '';
-			// this.Seguro_desgrav_per = '';
-			// this.Seguro_riesgo_per = '';
-			// this.suma_flujo_actuales = '';
-			// this.totalSUMA = '';
-			// this.VAN = '';
-			// this.TIR = '';
-			// this.cuotaMensual = '';
-			// this.cuota = '';
-			// this.tabla = [];
-			window.location.reload();
+			this.importe = '';
+			this.porc_inicial = '';
+			this.year = '';
+			this.frecuencia_pago = '';
+			this.plazo_gracia = '';
+			this.coste_notarial = '';
+			this.coste_registro = '';
+			this.comision = '';
+			this.portes = '';
+			this.gastos_Admin = '';
+			this.seguro_desg = '';
+			this.seguro_riesgo = '';
+			this.COK = '';
+			this.COK_MES = '';
+			this.TEA = '';
+			this.TEM = '';
+			this.monto_prestamo = '';
+			this.cuotas_x_año = '';
+			this.numero_cuotas_total = '';
+			this.Seguro_desgrav_per = '';
+			this.Seguro_riesgo_per = '';
+			this.suma_flujo_actuales = '';
+			this.totalSUMA = '';
+			this.VAN = '';
+			this.TIR = '';
+			this.cuotaMensual = '';
+			this.cuota = '';
+			this.tabla = [];
+			//window.location.reload();
+		},
+
+		cambio() {
+			//let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
+			
+			this.tabla = [];
 		},
 
 		calcular() {
 
 			//let cuotaCopia = 0;
+			//let tipoMoneda = document.getElementById('covertirsoles').value;
 			let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
 			let TEM = (Math.pow(1 + this.TEA, 1 / 12) - 1);
 			let saldoi = this.importe - (this.importe * (this.porc_inicial / 100)) + this.coste_notarial + this.coste_registro + this.comision;
@@ -273,9 +289,9 @@ export default {
 			let totalInt = 0;
 			let suma_flujo_actuales = 0;
 			let prevSaldo = saldoi;
-			
+			flujos.push(this.flujo);
 			console.log(flujos);
-			//flujos me sale [ ] vacío , arregla eso xd
+			
 			let tir = irr(flujos);
 
 			for (let i = 0; i <= year * 12; i++) {
@@ -311,12 +327,12 @@ export default {
 
 				this.flujo = -(this.cuotaMensual + this.portes + this.gastos_Admin + this.seguro_riesgo);
 				//console.log(this.flujo);
-				
-				
-				
-				
+
+
+
+
 				//console.log(tir);
-				
+
 				this.flujo_actuales = (this.flujo / (Math.pow(1 + COK_MES, i)));
 				//console.log(this.flujo_actuales);
 
@@ -330,8 +346,8 @@ export default {
 				this.VAN = (this.totalSUMA + saldoi);
 				//console.log(this.VAN);
 				//console.log(flujos)
-				
-				
+
+
 				console.log('La TIR es:', tir.toFixed(2) + '%');
 				this.TIR = tir;
 				//console.log(this.TIR);
@@ -364,7 +380,7 @@ export default {
 					}
 
 				}
-				flujos.push(this.flujo);
+				
 			}
 
 			this.totalIntereses = totalInt;
@@ -380,7 +396,6 @@ export default {
 			const tir = irr(flujosDeEfectivo);
 			return tir * 100;
 		},
-
 
 	},
 }

@@ -5,8 +5,8 @@ import FrenchMethod from './views/FrenchMethod.vue'
 import Convert_rate from './views/Convert_rate.vue'
 import CardProperty from './views/CardProperty.vue'
 import UserProfile from './views/UserProfile.vue'
-import {createRouter, createWebHistory} from "vue-router";
-const routes=[
+import { createRouter, createWebHistory } from "vue-router";
+const routes = [
     {
         path: "/",
         redirect: "/sign-up"
@@ -39,19 +39,22 @@ const routes=[
     {
         name: "FrenchMethod",
         component: FrenchMethod,
-        path: '/french_method'
+        path: '/french_method',
+        props: (route) => ({
+            propertyId: route.query.propertyId
+        })
     },
-    
-   {
-    name: 'UserProfile',
-    component: UserProfile,
-    path: '/UserProfile'
-  }
-    
+
+    {
+        name: 'UserProfile',
+        component: UserProfile,
+        path: '/UserProfile'
+    }
+
 ];
 
 const router = createRouter({
-    history:createWebHistory(),
+    history: createWebHistory(),
     routes
 });
 

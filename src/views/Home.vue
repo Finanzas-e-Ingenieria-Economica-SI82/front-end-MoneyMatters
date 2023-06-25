@@ -10,9 +10,10 @@
   <pv-toast/>
 </div>
 <div class="card-list md:col-4 lg:col-3" style="padding: 40px; margin-top: 40px; margin: 10px;">
-<card-property v-for="property in properties" :key="property.id" :property="property" @see-more="showPopup(property)"/>
-</div>
-<popup v-if="showPopupFlag" :property="selectedProperty" @close-popup="closePopup" />
+  <card-property v-for="property in properties" :key="property.id" :property="property" @see-more="showPopup(property)" /></div>
+  <popup v-if="showPopupFlag" :property="selectedProperty" @close-popup="closePopup" @goToCredit="showtable(selectedProperty)" />
+  <FrenchMethod v-if="selectedProperty" :property="selectedProperty" />
+
   </div>
 
 </template>
@@ -23,8 +24,9 @@ import AppBar from '../components/AppBar.vue';
 import CardProperty from './CardProperty.vue';
 import ApiService from '@/services/ApiService';
 import Popup from './Popup.vue';
+import FrenchMethod from './FrenchMethod.vue';
     export default {
-    components: { AppBar, CardProperty, Popup },
+    components: { AppBar, CardProperty, Popup, FrenchMethod },
       name: 'HomeS',
       mounted(){
           let user = localStorage.getItem('user-info');
@@ -33,13 +35,15 @@ import Popup from './Popup.vue';
           }
       },
       props: {
-       // msg: String
-      },
+    property: Object, // Agrega esta línea para recibir la propiedad selectedProperty
+  },
       data(){
         return{
+          
           properties:[],
           errorMessage: '',
-          selectType: ref(), // Mover la declaración aquí
+          selectType: {},
+
     types: ref([
       { type: 'Casa' },
       { type: 'Departamento' }
@@ -57,9 +61,19 @@ import Popup from './Popup.vue';
       this.selectedProperty = property;
     },
     closePopup() {
+
       this.showPopupFlag = false;
       this.selectedProperty = null;
     },
+    showtable(property) {
+  this.$router.push({
+    path: '/french_method',
+    query: {
+      propertyId: property.id,
+      
+    },
+  });
+},
   },
       created() {
 		ApiService.getProperties()

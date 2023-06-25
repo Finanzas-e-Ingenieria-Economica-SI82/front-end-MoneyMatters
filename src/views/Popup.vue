@@ -41,9 +41,9 @@
         </div>
         <div class="button-container">
           <div class="credit-container">
-            <router-link to="/french_method">
+
               <button class="credit-button" @click="goToCredit">Go to Crédito</button>
-            </router-link>
+
           </div>
         </div>
       </div>
@@ -62,7 +62,7 @@ export default {
       this.$emit('close-popup');
     },
     goToCredit() {
-      this.$emit('goToCredit');
+      this.$emit('goToCredit', this.property);
     },
   },
 };

@@ -1,17 +1,20 @@
 <template>
   <app-bar></app-bar>
+  <div class="filter">
+    <label for="property-type">Tipo de propiedad:</label>
+    <select id="property-type" v-model="selectedPropertyType">
+      <option value="">Todos</option>
+      <option value="Casa">Casa</option>
+      <option value="Departamento">Departamento</option>
+    </select>
+  </div>
   <div class="home">
     <div class="card flex justify-content-center" style="margin-top: 50px;">
-  <form @submit="onSubmit" class="flex flex-column align-items-center gap-2">
-      <pv-multiSelect style="width: 20%;" v-model="selectType" :class="{ 'p-invalid': errorMessage }" :options="types" optionLabel="type" placeholder="Select Type" :maxSelectedLabels="3" track-by="id" class="w-full md:w-20rem" aria-describedby="text-error" />
-        <small id="text-error" class="p-error">{{ errorMessage || '&nbsp;' }}</small>
-      <pv-button style="background: #46A2AE; border-style: none; width: 10%; justify-content: center; font-weight: bold;" type="submit" label="Submit" />
-  </form>
   <pv-toast/>
 </div>
 <div class="card-list md:col-4 lg:col-3" style="padding: 40px; margin-top: 40px; margin: 10px;">
-  <card-property v-for="property in properties" :key="property.id" :property="property" @see-more="showPopup(property)" /></div>
-  <popup v-if="showPopupFlag" :property="selectedProperty" @close-popup="closePopup" @goToCredit="showtable(selectedProperty)" />
+  <card-property v-for="property in filteredProperties" :key="property.id" :property="property" @see-more="showPopup(property)" /></div>
+    <popup v-if="showPopupFlag" :property="selectedProperty" @close-popup="closePopup" @goToCredit="showtable(selectedProperty)" />
   <FrenchMethod v-if="selectedProperty" :property="selectedProperty" />
 
   </div>
@@ -35,11 +38,20 @@ import FrenchMethod from './FrenchMethod.vue';
           }
       },
       props: {
-    property: Object, // Agrega esta línea para recibir la propiedad selectedProperty
+    property: Object,
   },
+  computed: {
+  filteredProperties() {
+    if (this.selectedPropertyType === '') {
+      return this.properties;
+    } else {
+      return this.properties.filter(property => property.type === this.selectedPropertyType);
+    }
+  },
+},
       data(){
         return{
-          
+          selectedPropertyType: '',
           properties:[],
           errorMessage: '',
           selectType: {},
@@ -101,5 +113,19 @@ import FrenchMethod from './FrenchMethod.vue';
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
 }
+.filter {
+  margin-top: 50px;
+  text-align: center;
+}
+
+label {
+  margin-right: 10px;
+}
+
+select {
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
 
 </style>

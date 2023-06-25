@@ -5,9 +5,9 @@
 		<p style="font-weight: bold;">... del préstamo</p>
 		<div class="p-field">
 			<label for="importe">Valor de la propiedad (S/.): </label>
-			<input class="form-control" v-model="property.price" :min="0" :max="100">
+			<input class="form-control" v-model="importe" :min="0" :max="100">
 			<select class="input-gropup-text" style="width: 50px; height: 25px; border-radius: 5px;">
-				<option id="covertirsoles"  selected value="0">S/</option>
+				<option id="covertirsoles" selected value="0">S/</option>
 				<option value="1">$</option>
 			</select>
 		</div>
@@ -45,7 +45,7 @@
 			<input class="form-control" v-model="plazo_gracia" :min="1" :max="50">
 			<label style="font-weight: bold;">(meses) &nbsp; </label>
 
-			<select id="plazo_gracia_select" class="input-gropup-text" @change="cambio()" 
+			<select id="plazo_gracia_select" class="input-gropup-text" @change="cambio()"
 				style="width: 100px; height: 25px; border-radius: 5px;">
 				<option selected value="0">TOTAL</option>
 				<option value="1">PARCIAL</option>
@@ -146,6 +146,9 @@
 							5
 					}) }} </label>
 				</div>
+				<div>
+					<label for="Bono"> Se aplicó el bono buen Pagador de : {{ Bono() }} </label>
+				</div>
 				<!-- <div>Cuota a pagar mensualmente: {{ cuotaMensual.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div>
 				<div>Capital Inicial: {{ importe.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div> -->
 			</div>
@@ -214,7 +217,8 @@ export default {
 			tabla: [],
 			totalIntereses: null,
 			tipoPlazoGracia: null,
-			tipoMoneda :null,
+			tipoMoneda: null,
+			bono: 0,
 		}
 	},
 
@@ -224,7 +228,8 @@ export default {
 
 		ApiService.getPropertiesById(propertyId)
 			.then(response => {
-				this.property = response.data; // Almacenar los datos del inmueble en la propiedad 'property'
+				this.property = response.data;
+				this.importe = this.property.price;
 			})
 			.catch(error => {
 				console.error('Error al cargar los datos del inmueble:', error);
@@ -260,13 +265,14 @@ export default {
 			this.TIR = '';
 			this.cuotaMensual = '';
 			this.cuota = '';
+			this.bono = '';
 			this.tabla = [];
 			//window.location.reload();
 		},
 
 		cambio() {
 			//let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
-			
+
 			this.tabla = [];
 		},
 
@@ -275,14 +281,30 @@ export default {
 			//let cuotaCopia = 0;
 			//let tipoMoneda = document.getElementById('covertirsoles').value;
 			let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
+			let bono = 0;
+
+			if(this.importe > 65200 && this.importe < 93100){
+				bono = 25700
+			}else
+			if(this.importe > 93100 && this.importe < 139400){
+				bono = 21400
+			}else
+			if(this.importe > 139400 && this.importe < 232200){
+				bono = 19600
+			}else
+			if(this.importe > 232200 && this.importe < 343900){
+				bono = 10800
+			}
+			
 			let TEM = (Math.pow(1 + this.TEA, 1 / 12) - 1);
-			let saldoi = this.importe - (this.importe * (this.porc_inicial / 100)) + this.coste_notarial + this.coste_registro + this.comision;
-			let saldo = this.importe - (this.importe * (this.porc_inicial / 100)) + this.coste_notarial + this.coste_registro + this.comision;
+			let saldoi = this.importe - ((this.importe * (this.porc_inicial / 100)) + bono) + this.coste_notarial + this.coste_registro + this.comision;
+			let saldo = this.importe - ((this.importe * (this.porc_inicial / 100)) + bono) + this.coste_notarial + this.coste_registro + this.comision;
 			let year = parseInt(this.year);
 			let COK_MES = (Math.pow(1 + (this.COK / 100), 1 / 12) - 1);
 			this.Seguro_desgrav_per = (this.seguro_desg / 12);
 			this.Seguro_riesgo_per = (this.seguro_riesgo / 12);
 			let flujos = [];
+
 
 			//this.cuotaMensual = (saldo*(TEM+this.Seguro_desgrav_per))/(1-Math.pow(1+(TEM+this.Seguro_desgrav_per), (-72)));
 			//this.cuotaMensual = m;
@@ -291,7 +313,7 @@ export default {
 			let prevSaldo = saldoi;
 			flujos.push(this.flujo);
 			console.log(flujos);
-			
+
 			let tir = irr(flujos);
 
 			for (let i = 0; i <= year * 12; i++) {
@@ -300,13 +322,14 @@ export default {
 				}
 				//var valorCuota = 
 
-				//totalInt = totalInt + (saldo * TEM);
-				//console.log(saldoi);
-				//console.log(COK_MES)
-				//console.log(cuotaCopia);
-				//console.log(this.intereses);
-				//console.log(TEM * 100);
-				//console.log(this.seguro_desgrv);
+				totalInt = totalInt + (saldo * TEM);
+				console.log(this.importe);
+				console.log(saldoi);
+				console.log(COK_MES)
+				console.log(cuotaCopia);
+				console.log(this.intereses);
+				console.log(TEM * 100);
+				console.log(this.seguro_desgrv);
 
 				//let copia = (saldo * tasa);
 
@@ -326,12 +349,6 @@ export default {
 				}
 
 				this.flujo = -(this.cuotaMensual + this.portes + this.gastos_Admin + this.seguro_riesgo);
-				//console.log(this.flujo);
-
-
-
-
-				//console.log(tir);
 
 				this.flujo_actuales = (this.flujo / (Math.pow(1 + COK_MES, i)));
 				//console.log(this.flujo_actuales);
@@ -372,15 +389,15 @@ export default {
 				this.intereses = (prevSaldo) * (TEM);
 				this.seguro_desgrv = (this.Seguro_desgrav_per / 100) * prevSaldo;
 				this.seguro_riesgo = (this.Seguro_riesgo_per / 100) * this.importe;
+				console.log(this.importe);
 				if (i <= this.plazo_gracia) {
 					if (tipoPlazoGracia == '1') {
 						saldo = saldoi;
 					} else if (tipoPlazoGracia == '0') {
 						saldo = prevSaldo + this.intereses;
 					}
-
 				}
-				
+
 			}
 
 			this.totalIntereses = totalInt;
@@ -392,6 +409,9 @@ export default {
 			writeFile(workbook, fileName);
 		},
 
+		Bono(){
+			return this.bono;
+		},
 		calcularTIR(flujosDeEfectivo) {
 			const tir = irr(flujosDeEfectivo);
 			return tir * 100;

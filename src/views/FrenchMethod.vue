@@ -273,6 +273,11 @@ export default {
 			let totalInt = 0;
 			let suma_flujo_actuales = 0;
 			let prevSaldo = saldoi;
+			
+			console.log(flujos);
+			//flujos me sale [ ] vacío , arregla eso xd
+			let tir = irr(flujos);
+
 			for (let i = 0; i <= year * 12; i++) {
 				if (i == this.plazo_gracia) {
 					var cuotaCopia = saldo;
@@ -280,12 +285,12 @@ export default {
 				//var valorCuota = 
 
 				//totalInt = totalInt + (saldo * TEM);
-				console.log(saldoi);
-				console.log(COK_MES)
-				console.log(cuotaCopia);
-				console.log(this.intereses);
-				console.log(TEM * 100);
-				console.log(this.seguro_desgrv);
+				//console.log(saldoi);
+				//console.log(COK_MES)
+				//console.log(cuotaCopia);
+				//console.log(this.intereses);
+				//console.log(TEM * 100);
+				//console.log(this.seguro_desgrv);
 
 				//let copia = (saldo * tasa);
 
@@ -305,29 +310,31 @@ export default {
 				}
 
 				this.flujo = -(this.cuotaMensual + this.portes + this.gastos_Admin + this.seguro_riesgo);
-				flujos.push(this.flujo);
-				console.log(flujos);
-				let tir = irr(flujos);
-				console.log(tir);
+				//console.log(this.flujo);
+				
+				
+				
+				
+				//console.log(tir);
 				
 				this.flujo_actuales = (this.flujo / (Math.pow(1 + COK_MES, i)));
-				console.log(this.flujo_actuales);
+				//console.log(this.flujo_actuales);
 
 				if (this.flujo_actuales !== 0 && i >= 1) {
 					suma_flujo_actuales += this.flujo_actuales;
-					console.log(suma_flujo_actuales);
+					//console.log(suma_flujo_actuales);
 				}
 				this.totalSUMA = suma_flujo_actuales;
-				console.log(this.totalSUMA);
+				//console.log(this.totalSUMA);
 
 				this.VAN = (this.totalSUMA + saldoi);
-				console.log(this.VAN);
-				console.log(flujos)
+				//console.log(this.VAN);
+				//console.log(flujos)
 				
 				
 				console.log('La TIR es:', tir.toFixed(2) + '%');
 				this.TIR = tir;
-				console.log(this.TIR);
+				//console.log(this.TIR);
 				//let TEM = (Math.pow(1 + this.TEA, 1/12) - 1) ;
 				const row = {
 					periodo: i,
@@ -357,6 +364,7 @@ export default {
 					}
 
 				}
+				flujos.push(this.flujo);
 			}
 
 			this.totalIntereses = totalInt;

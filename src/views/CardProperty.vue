@@ -31,7 +31,7 @@
       </template>
   </pv-card>
 
-
+  
 </div>
   <!-- <img src="../assets/mivivienda.png"/> -->
 

@@ -2,7 +2,7 @@
   <app-bar></app-bar>
   <div class="filter">
     <label for="property-type">Tipo de propiedad:</label>
-    <select id="property-type" v-model="selectedPropertyType">
+    <select id="property-type" v-model="selectedPropertyType" class="opcion">
       <option value="">Todos</option>
       <option value="Casa">Casa</option>
       <option value="Departamento">Departamento</option>
@@ -122,9 +122,8 @@ label {
   margin-right: 10px;
 }
 
-select {
+.opcion {
   width: 200px;
-  height: 50px;
   font-size: 16px;
   padding: 8px 12px;
   border: 1px solid #ccc;

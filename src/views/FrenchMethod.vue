@@ -4,7 +4,7 @@
 	<div class="FrenchMethod" id="app">
 		<p style="font-weight: bold;">... del préstamo</p>
 		<div class="p-field">
-			<label for="importe">Valor de la propiedad (S/.): </label>
+			<label for="importe">Valor de la propiedad: </label>
 			<input class="form-control" v-model="importe" :min="0" :max="100">
 			<select class="input-gropup-text" style="width: 50px; height: 25px; border-radius: 5px;">
 				<option id="covertirsoles" selected value="0">S/</option>
@@ -283,19 +283,23 @@ export default {
 			let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
 			let bono = 0;
 
-			if(this.importe > 65200 && this.importe < 93100){
+			if(this.importe >= 65200 && this.importe <= 93100){
 				bono = 25700
 			}else
-			if(this.importe > 93100 && this.importe < 139400){
+			if(this.importe >= 93100 && this.importe <= 139400){
 				bono = 21400
 			}else
-			if(this.importe > 139400 && this.importe < 232200){
+			if(this.importe >= 139400 && this.importe <= 232200){
 				bono = 19600
 			}else
-			if(this.importe > 232200 && this.importe < 343900){
+			if(this.importe >= 232200 && this.importe <= 343900){
 				bono = 10800
 			}
-			
+			if(this.importe > 343900){
+				bono = 343900
+			}
+			this.bono = bono;
+
 			let TEM = (Math.pow(1 + this.TEA, 1 / 12) - 1);
 			let saldoi = this.importe - ((this.importe * (this.porc_inicial / 100)) + bono) + this.coste_notarial + this.coste_registro + this.comision;
 			let saldo = this.importe - ((this.importe * (this.porc_inicial / 100)) + bono) + this.coste_notarial + this.coste_registro + this.comision;

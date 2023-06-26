@@ -2,6 +2,7 @@
 	<app-bar></app-bar>
 
 	<div class="FrenchMethod" id="app">
+		<div class="card-header">Crédito</div>
 		<p style="font-weight: bold;">... del préstamo</p>
 		<div class="p-field">
 			<label for="importe">Valor de la propiedad: </label>
@@ -270,27 +271,27 @@ export default {
 			//window.location.reload();
 		},
 		convertirMoneda() {
-    const tipoCambio = 3.63; // Cambia este valor por el tipo de cambio actual
+			const tipoCambio = 3.63; // Cambia este valor por el tipo de cambio actual
 
-    if (this.tipoMoneda === 0) {
-      // Convertir de soles a dólares
-    this.importe = this.importe / tipoCambio;  this.tipoMoneda = 1;
-	this.coste_notarial = this.coste_notarial / tipoCambio; this.tipoMoneda = 1;
-	this.coste_registro = this.coste_registro / tipoCambio; this.tipoMoneda = 1;
-	this.comision = this.comision / tipoCambio; this.tipoMoneda = 1;
-	this.portes = this.portes / tipoCambio; this.tipoMoneda = 1;
-	this.gastos_Admin = this.gastos_Admin / tipoCambio; this.tipoMoneda = 1;
+			if (this.tipoMoneda === 0) {
+			// Convertir de soles a dólares
+			this.importe = this.importe / tipoCambio;  this.tipoMoneda = 1;
+			this.coste_notarial = this.coste_notarial / tipoCambio; this.tipoMoneda = 1;
+			this.coste_registro = this.coste_registro / tipoCambio; this.tipoMoneda = 1;
+			this.comision = this.comision / tipoCambio; this.tipoMoneda = 1;
+			this.portes = this.portes / tipoCambio; this.tipoMoneda = 1;
+			this.gastos_Admin = this.gastos_Admin / tipoCambio; this.tipoMoneda = 1;
 
 
-    } else {
-    this.importe = this.importe * tipoCambio; this.tipoMoneda = 0;
-	this.coste_notarial = this.coste_notarial * tipoCambio; this.tipoMoneda = 0;
-	this.coste_registro = this.coste_registro * tipoCambio; this.tipoMoneda = 0;
-	this.comision = this.comision * tipoCambio; this.tipoMoneda = 0;
-	this.portes = this.portes * tipoCambio; this.tipoMoneda = 0;
-	this.gastos_Admin = this.gastos_Admin * tipoCambio; this.tipoMoneda = 0;
-    }
-  },
+			} else {
+			this.importe = this.importe * tipoCambio; this.tipoMoneda = 0;
+			this.coste_notarial = this.coste_notarial * tipoCambio; this.tipoMoneda = 0;
+			this.coste_registro = this.coste_registro * tipoCambio; this.tipoMoneda = 0;
+			this.comision = this.comision * tipoCambio; this.tipoMoneda = 0;
+			this.portes = this.portes * tipoCambio; this.tipoMoneda = 0;
+			this.gastos_Admin = this.gastos_Admin * tipoCambio; this.tipoMoneda = 0;
+			}
+		},
 		cambio() {
 			//let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
 
@@ -470,5 +471,9 @@ export default {
 .header {
 	font-size: 30px;
 	font-family: 'Josefin Sans', sans-serif;
+}
+.card-header{
+    font-size: 30px;
+    font-family: 'Josefin Sans', sans-serif;
 }
 </style>

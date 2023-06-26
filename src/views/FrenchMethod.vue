@@ -288,7 +288,7 @@ export default {
 	this.coste_notarial = this.coste_notarial * tipoCambio; this.tipoMoneda = 0;
 	this.coste_registro = this.coste_registro * tipoCambio; this.tipoMoneda = 0;
 	this.comision = this.comision * tipoCambio; this.tipoMoneda = 0;
-	this.portes = this.portes * tipoCambio; this.tipoMoneda = 0;
+	this.portes = (this.portes * tipoCambio).toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); this.tipoMoneda = 0;
 	this.gastos_Admin = this.gastos_Admin * tipoCambio; this.tipoMoneda = 0;
     }
   },

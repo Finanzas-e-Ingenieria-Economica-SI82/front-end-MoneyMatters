@@ -7,7 +7,7 @@
 
   <pv-card style="width: 25em">
       <template #header>
-          <img style="width: 20em" alt="home" :src="property.imageUrl"/>
+          <img style="width: 20em; height: 15em;" alt="home" :src="property.imageUrl"/>
       </template>
       <template #title>{{ property.name }} </template>
       <template #subtitle>

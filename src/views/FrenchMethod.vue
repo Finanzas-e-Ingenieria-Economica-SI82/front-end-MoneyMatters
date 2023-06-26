@@ -6,7 +6,7 @@
 		<p style="font-weight: bold;">... del préstamo</p>
 		<div class="p-field">
 			<label for="importe">Valor de la propiedad: </label>
-			<input class="form-control" v-model="importe" :min="0">
+			<input class="form-control" v-model="importe" type="number" :min="0">
 			<select class="input-gropup-text" style="width: 50px; height: 25px; border-radius: 5px;" @change="convertirMoneda">
 				<option value="0">S/</option>
 				<option value="1">$</option>
@@ -15,13 +15,13 @@
 
 		<div class="p-field">
 			<label for="porc_inicial">% Cuota Inicial :</label>
-			<input class="form-control" v-model="porc_inicial" :min="7.5" :max="30" suffix="%">
+			<input class="form-control" v-model="porc_inicial" type="number" :min="7.5" :max="30" suffix="%">
 			<label style="font-weight: bold;">(7.5% - 30%)</label>
 		</div>
 
 		<div class="p-field">
 			<label for="TEA"> Tasa:</label>
-			<input class="form-control" v-model="TEA" :min="1" :max="50" suffix="%">
+			<input class="form-control" v-model="TEA" type="number" :min="1" :max="50" suffix="%">
 			<router-link to="/convert_rate">
 				<pv-button
 					style="background: #46A2AE; border-style: none; width: 7%; justify-content: center; font-weight: bold;  margin-left: 15px;"
@@ -31,19 +31,19 @@
 
 		<div class="p-field">
 			<label for="year">Plazo :</label>
-			<input class="form-control" v-model="year" :min="1" :max="100">
+			<input class="form-control" v-model="year" type="number" :min="1" :max="100">
 			<label style="font-weight: bold;">(años)</label>
 		</div>
 
 		<div class="p-field">
 			<label for="frecuencia_pago">Frecuencia de Pago:</label>
-			<input class="form-control" v-model="frecuencia_pago" :min="1" :max="50">
+			<input class="form-control" v-model="frecuencia_pago" type="number" :min="1" :max="50">
 			<label style="font-weight: bold;">(meses)</label>
 		</div>
 
 		<div class="p-field">
 			<label for="plazo_gracia">Plazo Gracia:</label>
-			<input class="form-control" v-model="plazo_gracia" :min="1" :max="50">
+			<input class="form-control" v-model="plazo_gracia" type="number" :min="1" :max="50">
 			<label style="font-weight: bold;">(meses) &nbsp; </label>
 
 			<select id="plazo_gracia_select" class="input-gropup-text" @change="cambio()"
@@ -56,46 +56,46 @@
 		<p style="font-weight: bold;">... de los costes/gastos iniciales</p>
 		<div class="p-field">
 			<label for="coste_notarial">Coste notarial:</label>
-			<input class="form-control" v-model="coste_notarial" :min="1" :max="10000">
+			<input class="form-control" v-model="coste_notarial" type="number" :min="1" :max="10000">
 		</div>
 
 		<div class="p-field">
 			<label for="coste_registro">Coste de registro:</label>
-			<input class="form-control" v-model="coste_registro" :min="1" :max="10000">
+			<input class="form-control" v-model="coste_registro" type="number" :min="1" :max="10000">
 		</div>
 
 		<div class="p-field">
 			<label for="comision">Comisión de estudio:</label>
-			<input class="form-control" v-model="comision" :min="1" :max="10000">
+			<input class="form-control" v-model="comision" type="number" :min="1" :max="10000">
 		</div>
 
 		<p style="font-weight: bold;">... de los costes/gastos periodicos</p>
 		<div class="p-field">
 			<label for="portes">Portes:</label>
-			<input class="form-control" v-model="portes" :min="1" :max="10000">
+			<input class="form-control" v-model="portes" type="number" :min="1" :max="10000">
 		</div>
 
 		<div class="p-field">
 			<label for="gastos_Admin">Gastos de Administración:</label>
-			<input class="form-control" v-model="gastos_Admin" :min="1" :max="10000">
+			<input class="form-control" v-model="gastos_Admin" type="number" :min="1" :max="10000">
 		</div>
 
 		<div class="p-field">
 			<label for="seguro_desg">% de Seguro de desgravament:</label>
-			<input class="form-control" v-model="seguro_desg" :min="0" :max="100" suffix="%">
+			<input class="form-control" v-model="seguro_desg" type="number" :min="0" :max="100" suffix="%">
 			<label style="font-weight: bold;">(Anual)</label>
 		</div>
 
 		<div class="p-field">
 			<label for="seguro_riesgo">% de Seguro de riesgo:</label>
-			<input class="form-control" v-model="seguro_riesgo" :min="0" :max="100" suffix="%">
+			<input class="form-control" v-model="seguro_riesgo" type="number" :min="0" :max="100" suffix="%">
 			<label style="font-weight: bold;">(Anual)</label>
 		</div>
 
 		<p style="font-weight: bold;">... del costo de oportunidad</p>
 		<div class="p-field">
 			<label for="COK"> % dscto. COK:</label>
-			<input class="form-control" v-model="COK" :min="1" :max="50" suffix="%">
+			<input class="form-control" v-model="COK" type="number" :min="1" :max="50" suffix="%">
 			<label style="font-weight: bold;">(Anual)</label>
 		</div>
 
@@ -240,31 +240,31 @@ export default {
 
 		reiniciarValores() {
 			window.location.reload();
-			this.porc_inicial = '0';
-			this.year = '0';
-			this.frecuencia_pago = '0';
-			this.plazo_gracia = '0';
-			this.coste_notarial = '0';
-			this.coste_registro = '0';
-			this.comision = '0';
-			this.seguro_desg = '0';
-			this.seguro_riesgo = '0';
-			this.COK = '0';
-			this.COK_MES = '0';
-			this.TEA = '0';
-			this.TEM = '0';
-			this.monto_prestamo = '0';
-			this.cuotas_x_año = '0';
-			this.numero_cuotas_total = '0';
-			this.Seguro_desgrav_per = '0';
-			this.Seguro_riesgo_per = '0';
-			this.suma_flujo_actuales = '0';
-			this.totalSUMA = '0';
-			this.VAN = '0';
-			this.TIR = '0';
-			this.cuotaMensual = '0';
-			this.cuota = '0';
-			this.bono = '0';
+			this.porc_inicial = 0;
+			this.year = 0;
+			this.frecuencia_pago = 0;
+			this.plazo_gracia = 0;
+			this.coste_notarial = 0;
+			this.coste_registro = 0;
+			this.comision = 0;
+			this.seguro_desg = 0;
+			this.seguro_riesgo = 0;
+			this.COK = 0;
+			this.COK_MES = 0;
+			this.TEA = 0;
+			this.TEM = 0;
+			this.monto_prestamo = 0;
+			this.cuotas_x_año = 0;
+			this.numero_cuotas_total = 0;
+			this.Seguro_desgrav_per = 0;
+			this.Seguro_riesgo_per = 0;
+			this.suma_flujo_actuales = 0;
+			this.totalSUMA = 0;
+			this.VAN = 0;
+			this.TIR = 0;
+			this.cuotaMensual = 0;
+			this.cuota = 0;
+			this.bono = 0;
 			this.tabla = [];
 		},
 		convertirMoneda() {
@@ -318,7 +318,7 @@ export default {
 				bono = 343900
 			}
 			this.bono = bono;
-
+			
 			let TEM = (Math.pow(1 + this.TEA, 1 / 12) - 1);
 			let saldoi = this.importe - ((this.importe * (this.porc_inicial / 100)) + bono) + this.coste_notarial + this.coste_registro + this.comision;
 			let saldo = this.importe - ((this.importe * (this.porc_inicial / 100)) + bono) + this.coste_notarial + this.coste_registro + this.comision;
@@ -326,7 +326,8 @@ export default {
 			let COK_MES = (Math.pow(1 + (this.COK / 100), 1 / 12) - 1);
 			this.Seguro_desgrav_per = (this.seguro_desg / 12);
 			this.Seguro_riesgo_per = (this.seguro_riesgo / 12);
-			
+			console.log(this.coste_notarial + this.coste_registro + this.comision);
+			console.log(this.coste_notarial + this.importe);
 			let flujos = [];
 			console.log(flujos);
 
@@ -342,7 +343,12 @@ export default {
 					var cuotaCopia = saldo;
 				}
 				//var valorCuota = 
-
+				console.log(this.porc_inicial);
+				console.log(this.importe);
+				console.log(this.coste_notarial);
+				console.log(this.coste_registro);
+				console.log(this.comision);
+				console.log(this.portes);
 				totalInt = totalInt + (saldo * TEM);
 				console.log(this.importe);
 				console.log(saldoi);
@@ -351,6 +357,7 @@ export default {
 				console.log(this.intereses);
 				console.log(TEM * 100);
 				console.log(this.seguro_desgrv);
+				console.log(this.seguro_riesgo);
 
 				//let copia = (saldo * tasa);
 
@@ -409,6 +416,8 @@ export default {
 				this.intereses = (prevSaldo) * (TEM);
 				this.seguro_desgrv = (this.Seguro_desgrav_per / 100) * prevSaldo;
 				this.seguro_riesgo = (this.Seguro_riesgo_per / 100) * this.importe;
+				console.log(this.Seguro_desgrav_per)
+				console.log(this.Seguro_riesgo_per)
 				console.log(this.importe);
 				if (i <= this.plazo_gracia) {
 					if (tipoPlazoGracia == '1') {

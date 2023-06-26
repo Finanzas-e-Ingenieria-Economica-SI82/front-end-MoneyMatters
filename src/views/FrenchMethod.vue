@@ -6,8 +6,8 @@
 		<div class="p-field">
 			<label for="importe">Valor de la propiedad: </label>
 			<input class="form-control" v-model="importe" :min="0" :max="100">
-			<select class="input-gropup-text" style="width: 50px; height: 25px; border-radius: 5px;">
-				<option id="covertirsoles" selected value="0">S/</option>
+			<select class="input-gropup-text" style="width: 50px; height: 25px; border-radius: 5px;" @change="convertirMoneda">
+				<option value="0">S/</option>
 				<option value="1">$</option>
 			</select>
 		</div>
@@ -217,7 +217,7 @@ export default {
 			tabla: [],
 			totalIntereses: null,
 			tipoPlazoGracia: null,
-			tipoMoneda: null,
+			tipoMoneda: 0 || 1,
 			bono: 0,
 		}
 	},
@@ -269,7 +269,28 @@ export default {
 			this.tabla = [];
 			//window.location.reload();
 		},
+		convertirMoneda() {
+    const tipoCambio = 3.63; // Cambia este valor por el tipo de cambio actual
 
+    if (this.tipoMoneda === 0) {
+      // Convertir de soles a dólares
+    this.importe = this.importe / tipoCambio; 
+	this.coste_notarial = this.coste_notarial / tipoCambio; this.tipoMoneda = 1;
+	this.coste_registro = this.coste_registro / tipoCambio; this.tipoMoneda = 1;
+	this.comision = this.comision / tipoCambio; this.tipoMoneda = 1;
+	this.portes = this.portes / tipoCambio; this.tipoMoneda = 1;
+	this.gastos_Admin = this.gastos_Admin / tipoCambio; this.tipoMoneda = 1;
+
+
+    } else {
+    this.importe = this.importe * tipoCambio; this.tipoMoneda = 0;
+	this.coste_notarial = this.coste_notarial * tipoCambio; this.tipoMoneda = 0;
+	this.coste_registro = this.coste_registro * tipoCambio; this.tipoMoneda = 0;
+	this.comision = this.comision * tipoCambio; this.tipoMoneda = 0;
+	this.portes = this.portes * tipoCambio; this.tipoMoneda = 0;
+	this.gastos_Admin = this.gastos_Admin * tipoCambio; this.tipoMoneda = 0;
+    }
+  },
 		cambio() {
 			//let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
 

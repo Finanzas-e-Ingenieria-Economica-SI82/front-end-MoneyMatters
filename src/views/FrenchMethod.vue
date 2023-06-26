@@ -6,7 +6,7 @@
 		<p style="font-weight: bold;">... del préstamo</p>
 		<div class="p-field">
 			<label for="importe">Valor de la propiedad: </label>
-			<input class="form-control" v-model="importe" :min="0" :max="100">
+			<input class="form-control" v-model="importe" :min="0">
 			<select class="input-gropup-text" style="width: 50px; height: 25px; border-radius: 5px;" @change="convertirMoneda">
 				<option value="0">S/</option>
 				<option value="1">$</option>
@@ -20,7 +20,7 @@
 		</div>
 
 		<div class="p-field">
-			<label for="TEA"> TEA:</label>
+			<label for="TEA"> Tasa:</label>
 			<input class="form-control" v-model="TEA" :min="1" :max="50" suffix="%">
 			<router-link to="/convert_rate">
 				<pv-button
@@ -56,28 +56,28 @@
 		<p style="font-weight: bold;">... de los costes/gastos iniciales</p>
 		<div class="p-field">
 			<label for="coste_notarial">Coste notarial:</label>
-			<input class="form-control" v-model="coste_notarial" :min="1" :max="1000">
+			<input class="form-control" v-model="coste_notarial" :min="1" :max="10000">
 		</div>
 
 		<div class="p-field">
 			<label for="coste_registro">Coste de registro:</label>
-			<input class="form-control" v-model="coste_registro" :min="1" :max="1000">
+			<input class="form-control" v-model="coste_registro" :min="1" :max="10000">
 		</div>
 
 		<div class="p-field">
 			<label for="comision">Comisión de estudio:</label>
-			<input class="form-control" v-model="comision" :min="1" :max="1000">
+			<input class="form-control" v-model="comision" :min="1" :max="10000">
 		</div>
 
 		<p style="font-weight: bold;">... de los costes/gastos periodicos</p>
 		<div class="p-field">
 			<label for="portes">Portes:</label>
-			<input class="form-control" v-model="portes" :min="1" :max="1000">
+			<input class="form-control" v-model="portes" :min="1" :max="10000">
 		</div>
 
 		<div class="p-field">
 			<label for="gastos_Admin">Gastos de Administración:</label>
-			<input class="form-control" v-model="gastos_Admin" :min="1" :max="1000">
+			<input class="form-control" v-model="gastos_Admin" :min="1" :max="10000">
 		</div>
 
 		<div class="p-field">
@@ -189,20 +189,20 @@ export default {
 		return {
 			property: {},
 			importe: 0,
-			porc_inicial: 12,
-			year: 6,
-			frecuencia_pago: 1,
-			plazo_gracia: 12,
-			coste_notarial: 250,
-			coste_registro: 150,
-			comision: 100,
+			porc_inicial: 0,
+			year: 0,
+			frecuencia_pago: 0,
+			plazo_gracia: 0,
+			coste_notarial: 0,
+			coste_registro: 0,
+			comision: 0,
 			portes: 120,
 			gastos_Admin: 130,
-			seguro_desg: 0.40,
-			seguro_riesgo: 0.30,
-			COK: 35,
+			seguro_desg: 0.0,
+			seguro_riesgo: 0.0,
+			COK: 0,
 			COK_MES: 0.0,
-			TEA: 0.16,
+			TEA: 0.0,
 			TEM: 0.0,
 			monto_prestamo: 0,
 			cuotas_x_año: 0,
@@ -213,7 +213,7 @@ export default {
 			totalSUMA: 0,
 			VAN: 0,
 			TIR: 0,
-			cuotaMensual: null,
+			cuotaMensual: 0,
 			cuota: 0.0,
 			tabla: [],
 			totalIntereses: null,
@@ -239,59 +239,56 @@ export default {
 	methods: {
 
 		reiniciarValores() {
-			this.importe = '';
-			this.porc_inicial = '';
-			this.year = '';
-			this.frecuencia_pago = '';
-			this.plazo_gracia = '';
-			this.coste_notarial = '';
-			this.coste_registro = '';
-			this.comision = '';
-			this.portes = '';
-			this.gastos_Admin = '';
-			this.seguro_desg = '';
-			this.seguro_riesgo = '';
-			this.COK = '';
-			this.COK_MES = '';
-			this.TEA = '';
-			this.TEM = '';
-			this.monto_prestamo = '';
-			this.cuotas_x_año = '';
-			this.numero_cuotas_total = '';
-			this.Seguro_desgrav_per = '';
-			this.Seguro_riesgo_per = '';
-			this.suma_flujo_actuales = '';
-			this.totalSUMA = '';
-			this.VAN = '';
-			this.TIR = '';
-			this.cuotaMensual = '';
-			this.cuota = '';
-			this.bono = '';
+			window.location.reload();
+			this.porc_inicial = '0';
+			this.year = '0';
+			this.frecuencia_pago = '0';
+			this.plazo_gracia = '0';
+			this.coste_notarial = '0';
+			this.coste_registro = '0';
+			this.comision = '0';
+			this.seguro_desg = '0';
+			this.seguro_riesgo = '0';
+			this.COK = '0';
+			this.COK_MES = '0';
+			this.TEA = '0';
+			this.TEM = '0';
+			this.monto_prestamo = '0';
+			this.cuotas_x_año = '0';
+			this.numero_cuotas_total = '0';
+			this.Seguro_desgrav_per = '0';
+			this.Seguro_riesgo_per = '0';
+			this.suma_flujo_actuales = '0';
+			this.totalSUMA = '0';
+			this.VAN = '0';
+			this.TIR = '0';
+			this.cuotaMensual = '0';
+			this.cuota = '0';
+			this.bono = '0';
 			this.tabla = [];
-			//window.location.reload();
 		},
 		convertirMoneda() {
-			const tipoCambio = 3.63; // Cambia este valor por el tipo de cambio actual
+					const tipoCambio = 3.63; // Cambia este valor por el tipo de cambio actual
 
-			if (this.tipoMoneda === 0) {
-			// Convertir de soles a dólares
-			this.importe = this.importe / tipoCambio;  this.tipoMoneda = 1;
-			this.coste_notarial = this.coste_notarial / tipoCambio; this.tipoMoneda = 1;
-			this.coste_registro = this.coste_registro / tipoCambio; this.tipoMoneda = 1;
-			this.comision = this.comision / tipoCambio; this.tipoMoneda = 1;
-			this.portes = this.portes / tipoCambio; this.tipoMoneda = 1;
-			this.gastos_Admin = this.gastos_Admin / tipoCambio; this.tipoMoneda = 1;
+					if (this.tipoMoneda === 0) {
+					// Convertir de soles a dólares
 
+					this.importe = this.importe * tipoCambio; this.tipoMoneda = 1;
+					this.coste_notarial = this.coste_notarial * tipoCambio; this.tipoMoneda = 1;
+					this.coste_registro = this.coste_registro * tipoCambio; this.tipoMoneda = 1;
+					this.comision = this.comision * tipoCambio; this.tipoMoneda = 1;
+					this.portes = (this.portes * tipoCambio); this.tipoMoneda = 1;
+					this.gastos_Admin = this.gastos_Admin * tipoCambio; this.tipoMoneda = 1;
 
-    } else {
-    this.importe = this.importe * tipoCambio; this.tipoMoneda = 0;
-	this.coste_notarial = this.coste_notarial * tipoCambio; this.tipoMoneda = 0;
-	this.coste_registro = this.coste_registro * tipoCambio; this.tipoMoneda = 0;
-	this.comision = this.comision * tipoCambio; this.tipoMoneda = 0;
-	this.portes = (this.portes * tipoCambio).toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); this.tipoMoneda = 0;
-	this.gastos_Admin = this.gastos_Admin * tipoCambio; this.tipoMoneda = 0;
-    }
-  },
+			} else {
+				this.importe = this.importe / tipoCambio;  this.tipoMoneda = 0;
+					this.coste_notarial = this.coste_notarial / tipoCambio; this.tipoMoneda = 0;
+					this.coste_registro = this.coste_registro / tipoCambio; this.tipoMoneda = 0;
+					this.comision = this.comision / tipoCambio; this.tipoMoneda = 0;
+					this.portes = this.portes / tipoCambio; this.tipoMoneda = 0;
+					this.gastos_Admin = this.gastos_Admin / tipoCambio; this.tipoMoneda = 0;
+			}
+		},
 		cambio() {
 			//let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
 

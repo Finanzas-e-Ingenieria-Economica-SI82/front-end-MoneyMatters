@@ -142,12 +142,12 @@
 				</div>
 				<div>
 					<label for="TIR"> TIR : {{ TIR.toLocaleString("es-US", {
-						minimumFractionDigits: 5, maximumFractionDigits:
-							5
-					}) }} </label>
+						minimumFractionDigits: 2, maximumFractionDigits:
+							2
+					}) }} % </label>
 				</div>
 				<div>
-					<label for="Bono"> Se aplicó el bono buen Pagador de : {{ Bono() }} </label>
+					<label for="Bono"> Se aplicó el bono: {{ Bono() }} </label>
 				</div>
 				<!-- <div>Cuota a pagar mensualmente: {{ cuotaMensual.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div>
 				<div>Capital Inicial: {{ importe.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div> -->
@@ -307,18 +307,16 @@ export default {
 			let COK_MES = (Math.pow(1 + (this.COK / 100), 1 / 12) - 1);
 			this.Seguro_desgrav_per = (this.seguro_desg / 12);
 			this.Seguro_riesgo_per = (this.seguro_riesgo / 12);
+			
 			let flujos = [];
-
+			console.log(flujos);
 
 			//this.cuotaMensual = (saldo*(TEM+this.Seguro_desgrav_per))/(1-Math.pow(1+(TEM+this.Seguro_desgrav_per), (-72)));
 			//this.cuotaMensual = m;
 			let totalInt = 0;
 			let suma_flujo_actuales = 0;
 			let prevSaldo = saldoi;
-			flujos.push(this.flujo);
-			console.log(flujos);
 
-			let tir = irr(flujos);
 
 			for (let i = 0; i <= year * 12; i++) {
 				if (i == this.plazo_gracia) {
@@ -368,10 +366,9 @@ export default {
 				//console.log(this.VAN);
 				//console.log(flujos)
 
-
-				console.log('La TIR es:', tir.toFixed(2) + '%');
-				this.TIR = tir;
-				//console.log(this.TIR);
+				flujos.push(this.flujo.toFixed(2));
+				console.log(flujos);
+				
 				//let TEM = (Math.pow(1 + this.TEA, 1/12) - 1) ;
 				const row = {
 					periodo: i,
@@ -401,9 +398,16 @@ export default {
 						saldo = prevSaldo + this.intereses;
 					}
 				}
-
+				
 			}
-
+			
+			//flujos.unshift(saldoi);
+			flujos[0] = saldoi;
+			console.log(flujos);
+			let tir = irr(flujos);
+			console.log(tir);
+			console.log('La TIR es:', tir.toFixed(2) + '%');
+			this.TIR = tir * 100;
 			this.totalIntereses = totalInt;
 		},
 

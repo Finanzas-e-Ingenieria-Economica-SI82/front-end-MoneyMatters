@@ -150,10 +150,7 @@
 				<div>
 					<label for="Bono"> Se aplicó el bono: {{ Bono() }} </label>
 				</div>
-				<!-- <div>Cuota a pagar mensualmente: {{ cuotaMensual.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div>
-				<div>Capital Inicial: {{ importe.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) }} $</div> -->
 			</div>
-
 			<br>
 			<pv-datatable v-if="tabla.length > 0" :value="tabla" :rows="tabla.length">
 				<pv-column field="periodo" header="Periodo"></pv-column>
@@ -162,14 +159,12 @@
 				<pv-column field="intereses" header="Intereses"></pv-column>
 				<pv-column field="seguro_desgrv" header=" Seguro Desgravamen"></pv-column>
 				<pv-column field="cuota" header="Cuota"></pv-column>
-				<pv-column field="seguro_riesgo" header="Seguro de Riesgo"></pv-column>
+				<pv-column field="seguro_riesg" header="Seguro de Riesgo"></pv-column>
 				<pv-column field="portes" header="Portes"></pv-column>
 				<pv-column field="gastos_admin" header="Gastos Administrativos"></pv-column>
 				<pv-column field="flujo" header="Flujo"></pv-column>
 				<!-- <pv-column field="flujo_actuales" header="Flujos Actuales"></pv-column> -->
 			</pv-datatable>
-
-			<!-- <div style="font-size: 30px; font-family: 'Josefin Sans', sans-serif; padding-top: 30px;" v-if="totalIntereses !== null">Pago total de intereses: {{ totalIntereses.toLocaleString('es-US', {minimumFractionDigits: 2, maximumFractionDigits: 7}) }} $</div> -->
 		</div>
 	</div>
 </template>
@@ -178,7 +173,6 @@
 import AppBar from '../components/AppBar.vue';
 import { utils, writeFile } from 'xlsx';
 import { irr } from 'financial'
-//const { irr } = require('financial');
 import ApiService from '@/services/ApiService';
 
 export default {
@@ -290,15 +284,10 @@ export default {
 			}
 		},
 		cambio() {
-			//let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
-
 			this.tabla = [];
 		},
 
 		calcular() {
-
-			//let cuotaCopia = 0;
-			//let tipoMoneda = document.getElementById('covertirsoles').value;
 			let tipoPlazoGracia = document.getElementById('plazo_gracia_select').value;
 			let bono = 0;
 
@@ -326,23 +315,20 @@ export default {
 			let COK_MES = (Math.pow(1 + (this.COK / 100), 1 / 12) - 1);
 			this.Seguro_desgrav_per = (this.seguro_desg / 12);
 			this.Seguro_riesgo_per = (this.seguro_riesgo / 12);
+			console.log(this.Seguro_riesgo_per);
 			console.log(this.coste_notarial + this.coste_registro + this.comision);
 			console.log(this.coste_notarial + this.importe);
 			let flujos = [];
 			console.log(flujos);
 
-			//this.cuotaMensual = (saldo*(TEM+this.Seguro_desgrav_per))/(1-Math.pow(1+(TEM+this.Seguro_desgrav_per), (-72)));
-			//this.cuotaMensual = m;
 			let totalInt = 0;
 			let suma_flujo_actuales = 0;
 			let prevSaldo = saldoi;
-
 
 			for (let i = 0; i <= year * 12; i++) {
 				if (i == this.plazo_gracia) {
 					var cuotaCopia = saldo;
 				}
-				//var valorCuota = 
 				console.log(this.porc_inicial);
 				console.log(this.importe);
 				console.log(this.coste_notarial);
@@ -357,9 +343,7 @@ export default {
 				console.log(this.intereses);
 				console.log(TEM * 100);
 				console.log(this.seguro_desgrv);
-				console.log(this.seguro_riesgo);
-
-				//let copia = (saldo * tasa);
+				console.log(this.seguro_riesg);
 
 				if (i <= this.plazo_gracia) {
 					if (tipoPlazoGracia == '0') {
@@ -376,26 +360,20 @@ export default {
 					saldo = prevSaldo - this.amortizacion;
 				}
 
-				this.flujo = -(this.cuotaMensual + this.portes + this.gastos_Admin + this.seguro_riesgo);
+				this.flujo = -(this.cuotaMensual + this.portes + this.gastos_Admin + this.seguro_riesg);
 
 				this.flujo_actuales = (this.flujo / (Math.pow(1 + COK_MES, i)));
-				//console.log(this.flujo_actuales);
 
 				if (this.flujo_actuales !== 0 && i >= 1) {
 					suma_flujo_actuales += this.flujo_actuales;
-					//console.log(suma_flujo_actuales);
 				}
 				this.totalSUMA = suma_flujo_actuales;
-				//console.log(this.totalSUMA);
 
 				this.VAN = (this.totalSUMA + saldoi);
-				//console.log(this.VAN);
-				//console.log(flujos)
 
 				flujos.push(this.flujo.toFixed(2));
 				console.log(flujos);
-				
-				//let TEM = (Math.pow(1 + this.TEA, 1/12) - 1) ;
+
 				const row = {
 					periodo: i,
 					saldo: i == 0 ? (saldoi).toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (saldo).toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
@@ -404,7 +382,7 @@ export default {
 					portes: i == 0 ? 0 : this.portes,
 					gastos_admin: i == 0 ? 0 : this.gastos_Admin,
 					seguro_desgrv: i == 0 ? 0 : (this.seguro_desgrv).toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-					seguro_riesgo: i == 0 ? 0 : (this.seguro_riesgo).toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+					seguro_riesg: i == 0 ? 0 : (this.seguro_riesg).toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
 					flujo: i == 0 ? saldo.toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : this.flujo.toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
 					flujo_actuales: i == 0 ? 0 : (this.flujo_actuales).toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
 					amortizacion: this.amortizacion.toLocaleString("es-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
@@ -415,10 +393,7 @@ export default {
 				prevSaldo = saldo;
 				this.intereses = (prevSaldo) * (TEM);
 				this.seguro_desgrv = (this.Seguro_desgrav_per / 100) * prevSaldo;
-				this.seguro_riesgo = (this.Seguro_riesgo_per / 100) * this.importe;
-				console.log(this.Seguro_desgrav_per)
-				console.log(this.Seguro_riesgo_per)
-				console.log(this.importe);
+				this.seguro_riesg = (this.Seguro_riesgo_per / 100) * this.importe;
 				if (i <= this.plazo_gracia) {
 					if (tipoPlazoGracia == '1') {
 						saldo = saldoi;

@@ -274,7 +274,7 @@ export default {
 
     if (this.tipoMoneda === 0) {
       // Convertir de soles a dólares
-    this.importe = this.importe / tipoCambio; 
+    this.importe = this.importe / tipoCambio;  this.tipoMoneda = 1;
 	this.coste_notarial = this.coste_notarial / tipoCambio; this.tipoMoneda = 1;
 	this.coste_registro = this.coste_registro / tipoCambio; this.tipoMoneda = 1;
 	this.comision = this.comision / tipoCambio; this.tipoMoneda = 1;

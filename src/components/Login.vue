@@ -49,7 +49,7 @@ import axios from 'axios';
       },
       methods:{
         async login(){
-          let result = await axios.get("http://localhost:3000/users?username="+this.username+"&password="+this.password)
+          let result = await axios.get("https://moneymatters1.onrender.com/users?username="+this.username+"&password="+this.password)
           if(result.status == 200 && result.data.length > 0){
             
             localStorage.setItem('user-info', JSON.stringify(result.data))

@@ -21,10 +21,8 @@
         </div>
       </template>
       <template #content>
-          <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-              quas!
-          </p>
+        
+           <p><span class="material-symbols-outlined">location_on</span> &nbsp; {{ property.ubication }} </p>
       </template>
       <template #footer>
           <pv-button rounded style="background: #46A2AE; border-style: none; width: 40%; justify-content: center; font-weight: bold;" icon="pi pi-check" label="See More" @click="$emit('see-more')"  />

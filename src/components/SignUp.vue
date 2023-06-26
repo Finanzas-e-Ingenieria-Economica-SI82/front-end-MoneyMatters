@@ -63,7 +63,7 @@ export default {
     methods:{
     async msg(){
         if(this.username!='' && this.password!='' && this.name!='' && this.lastname!='' && this.dni!='' && this.phone!=''){
-            let result =await axios.post("http://localhost:3000/users",
+            let result =await axios.post("https://moneymatters1.onrender.com/users",
         {username: this.username,
         password:this.password,
         name:this.name,

@@ -32,7 +32,9 @@
 
 <script>
 //import { response } from 'express';
-import axios from 'axios';
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
+//import axios from 'axios';
     export default {
       name: 'LogiN',
     
@@ -47,19 +49,29 @@ import axios from 'axios';
           error: ''
         }
       },
+ 
       methods:{
-        async login(){
-          let result = await axios.get("https://moneymatters1.onrender.com/users?username="+this.username+"&password="+this.password)
-          if(result.status == 200 && result.data.length > 0){
-            
-            localStorage.setItem('user-info', JSON.stringify(result.data))
-            this.$router.push('/home')
-          
-        }else(
-          this.error = 'Usuario o contraseña incorrectos')
-        //console.warn(result);
-        
-    },
+        async login() {
+    try {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("username", "==", this.username), where("password", "==", this.password));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.size > 0) {
+        const userData = querySnapshot.docs[0].data();
+        console.log("Usuario logueado:", userData);
+        this.$router.push({
+  path: "/home",
+  params: { userData: userData }
+});
+        return userData;
+      } else {
+        this.error = "Usuario o contraseña incorrectos";
+      }
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+    }
+  }
     
   }  }
 </script>

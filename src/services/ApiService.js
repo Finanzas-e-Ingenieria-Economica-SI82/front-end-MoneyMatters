@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
 
 const apiClient = axios.create({
 	baseURL: "https://moneymatters1.onrender.com/",
@@ -19,29 +17,25 @@ export default {
 		const currentUserJSON = localStorage.getItem('user-info');
 		if (currentUserJSON !== null) {
 			const currentUser = JSON.parse(currentUserJSON);
-			if (currentUser[0]) {
-				const userId = currentUser[0].id;
-				const userRef = doc(db, "users", userId);
-				return getDoc(userRef)
-					.then((docSnapshot) => {
-						if (docSnapshot.exists()) {
-							const currentUserData = docSnapshot.data();
-							return currentUserData;
-						} else {
-							console.log("User not found in Firestore.");
-							return null;
-						}
-					})
-					.catch((error) => {
-						console.log(error);
+			return apiClient.get("/users")
+				.then((response) => {
+					const users = response.data;
+					if (currentUser[0]) {
+						const currentUserData = users.find(user => user.id === currentUser[0].id);
+						return currentUserData;
+
+					} else {
 						return null;
-					});
-			} else {
-				return null;
-			}
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					return null;
+				});
 		} else {
 			console.log("User info not found in local storage.");
 		}
+
 	},
 
 	updateUser(user) {

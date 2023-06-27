@@ -32,10 +32,10 @@ import FrenchMethod from './FrenchMethod.vue';
     components: { AppBar, CardProperty, Popup, FrenchMethod },
       name: 'HomeS',
       mounted(){
-          let user = localStorage.getItem('user-info');
-          if(!user){
-            this.$router.push('/sign-up')
-          }
+          // let user = localStorage.getItem('user-info');
+          // if(!user){
+          //   this.$router.push('/sign-up')
+          // }
       },
       props: {
     property: Object,
